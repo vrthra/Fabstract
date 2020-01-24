@@ -15,9 +15,11 @@ def _predicate(src):
 
 
 def main(gf_fbjson, bug_fn, pred, max_checks=100):
+    name = os.path.basename(bug_fn)
     global LOG_NAME, MY_PREDICATE
     A.LOG = True
-    LOG_NAME = "%s.log.json" % bug_fn
+    os.system('mkdir -p results')
+    LOG_NAME = "./results/%s.log.json" % name
     MY_PREDICATE = pred
     os.system('rm -f %s' % LOG_NAME)
     grammar_fn = gf_fbjson
@@ -33,6 +35,5 @@ def main(gf_fbjson, bug_fn, pred, max_checks=100):
     print("min:", repr(min_s))
     print("abs:", repr(abs_s))
 
-    os.system('mkdir -p results')
-    with open('./results/%s.json' % os.path.basename(bug_fn), 'w+') as f:
+    with open('./results/%s.json' % name, 'w+') as f:
         print(json.dumps({'min_s': min_s, 'abs_s': abs_s, 'abs_t': a_mintree}, indent=4), file=f)
