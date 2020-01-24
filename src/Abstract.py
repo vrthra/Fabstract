@@ -211,56 +211,6 @@ def compatible_nodes(tree, grammar):
     if [] in grammar[key]: node_lst.insert(0, (-1, (key, [])))
     return node_lst
 
-# The exploration itself.
-
-def reduction(tree, grammar, predicate, limit=10):
-    first_tuple = (tree, [])
-    p_q = []
-    add_to_pq(first_tuple, p_q)
-    
-    ostr = tree_to_string(tree)
-    assert predicate(ostr) == PRes.success
-    failed_set = {ostr: True}
-    ftrees = {ostr: copy.deepcopy(tree)}
-
-    min_tree, min_tree_size = tree, count_leaves(tree)
-    while p_q:
-        # extract the tuple
-        _n, _m, _ec, (dtree, F_path) = heapq.heappop(p_q)
-        stree = get_child(dtree, F_path)
-        skey, schildren = stree
-        found = False
-        # we now want to replace stree with alternate nodes.
-        for i, node in compatible_nodes(stree, grammar):
-            # replace with current (copy).
-            ctree = replace_path(dtree, F_path, node)
-            if ctree is None: continue # same node
-            v = tree_to_string(ctree)
-            if v in failed_set: continue
-            failed_set[v] = predicate(v) # we ignore PRes.invalid results
-            if failed_set[v] == PRes.success:
-                ftrees[v] = copy.deepcopy(ctree)
-                found = True
-                ctree_size = count_leaves(ctree)
-                if ctree_size < min_tree_size: min_tree, min_tree_size = ctree, ctree_size
-                    
-                if len(ftrees) >= limit:
-                    return ftrees, min_tree 
-
-                if v not in failed_set:
-                    print(v)
-                t = (ctree, F_path)
-                assert get_child(ctree, F_path) is not None
-                add_to_pq(t, p_q)
-        if found: continue
-        for i, child in enumerate(schildren):
-            if not is_nt(child[0]): continue
-            assert get_child(tree=dtree, path=F_path + [i]) is not None
-            new_dtree = copy.deepcopy(dtree)
-            t = (new_dtree, F_path + [i])
-            add_to_pq(t, p_q)
-    return ftrees, min_tree
-
 def e_g(general_a):
     general = True if not general_a else general_a[0]
     return general
@@ -293,15 +243,11 @@ def mark_faulty_name(symbol, prefix, v):
 
 def limit_gen_s(t, d, n, s):
     name, children, *generalize_ = t
+    if not children: return s
     v = tree_to_string(t)
-    if not len(v): return s
-    generalize = e_g(generalize_)
-    if generalize:
-        return name
-    return s
-
-def limit_gen(t, d, n, s):
-    name, children, *generalize_ = t
+    if not is_nt(name): return v
+    if is_token(name): return v
+    if not len(v.strip()): return v
     generalize = e_g(generalize_)
     if generalize:
         return name
@@ -523,7 +469,7 @@ def get_abstraction(grammar_, my_input, predicate, max_checks=100):
     assert start in grammar
     assert predicate(my_input) == PRes.success
     d_tree, *_ = Parser(non_canonical(grammar), start_symbol=start).parse(my_input)
-    patterns, min_tree = reduction(d_tree, grammar, predicate)
+    min_tree = reduction(d_tree, grammar, predicate)
     min_s = tree_to_string(min_tree)
     if LOG:
         print('reduction:', count_leaves(min_tree), flush=True)
@@ -612,7 +558,6 @@ def reduction(tree, grammar, predicate):
     ostr = tree_to_string(tree)
     assert predicate(ostr) == PRes.success
     failed_set = {ostr: True}
-    ftrees = {ostr: tree}
 
     min_tree, min_tree_size = tree, count_leaves(tree)
     while p_q:
@@ -630,15 +575,10 @@ def reduction(tree, grammar, predicate):
             if v in failed_set: continue
             failed_set[v] = predicate(v) # we ignore PRes.invalid results
             if failed_set[v] == PRes.success:
-                ftrees[v] = ctree
                 found = True
                 ctree_size = count_leaves(ctree)
                 if ctree_size < min_tree_size: min_tree, min_tree_size = ctree, ctree_size
                 
-                # not required if found is set.
-                #if len(ftrees) >= 100:
-                #    return ftrees, min_tree 
-
                 if v not in failed_set:
                     print(v)
                 t = (ctree, F_path)
@@ -654,7 +594,7 @@ def reduction(tree, grammar, predicate):
             assert get_child(tree=dtree, path=F_path + [i]) is not None
             t = (dtree, F_path + [i])
             add_to_pq(t, p_q)
-    return ftrees, min_tree
+    return min_tree
 
 
 VALID_VALUES = {}

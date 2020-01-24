@@ -15,9 +15,8 @@ def general_str(tree):
         else:
             assert not children
             return name
-    if A.is_token(name):
+    if A.is_token(name): return v
         # we should not go below a token that is concrete 
-        return v
     res = []
     for c in children:
         x = general_str(c)
@@ -38,6 +37,7 @@ def general_count(tree):
         else:
             assert not children
             return len(name)
+    if A.is_token(name): return len(v)
     res = 0
     for c in children:
         x = general_count(c)
@@ -59,6 +59,7 @@ def general_count_x(tree): # return (#tokens, #chars)
         else:
             assert not children
             return (0, len(name))
+    if A.is_token(name): return (0, len(v))
     ts = 0
     res = 0
     for c in children:
