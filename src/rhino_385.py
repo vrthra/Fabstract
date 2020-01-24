@@ -7,17 +7,16 @@ import os.path
 import tempfile
 
 def my_predicate(src):
-    with tempfile.NamedTemporaryFile(prefix='lua') as tmp:
+    with tempfile.NamedTemporaryFile(prefix='rhino') as tmp:
         tname = tmp.name
         tmp.write(src.encode('UTF-8'))
         tmp.flush()
-        o = A.do('./lang/lua/compilers/lua --'.split(' ') + [tmp.name])
+        o = A.do('java -jar ./lang/js/compilers/rhino-1.7.7.2.jar'.split(' ') + [tmp.name])
         if o.returncode == 0: return PRes.failed
-        if o.returncode == -11: return PRes.success
-        out = o.stdout.decode("utf-8", "ignore")
-        if 'Segmentation fault (core dumped)' in out:
+        out = o.stdout.decode()
+        if 'java.lang.IllegalStateException' in out:
             return PRes.success
-        elif 'stack traceback' in out:
+        elif 'syntax errors.' in out:
             return PRes.invalid
         elif 'TIMEOUT' in out:
             # timeout should be failed.
@@ -26,4 +25,4 @@ def my_predicate(src):
 
 import sys
 if __name__ == '__main__':
-    I.main('./lang/lua/grammar/lua.fbjson', './lang/lua/bugs/4.lua', my_predicate, max_checks=100)
+    I.main('./lang/js/grammar/javascript.fbjson', './lang/js/bugs/rhino.385.js', my_predicate, max_checks=100)
