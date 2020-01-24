@@ -16,6 +16,8 @@ def my_predicate(src):
         out = o.stdout.decode()
         if 'cannot be cast to clojure.lang.MultiFn' in out:
             return PRes.success
+        if 'cannot be cast to class clojure.lang.MultiFn' in out:
+            return PRes.success
         elif 'Syntax error compiling' in out:
             return PRes.invalid
         elif 'TIMEOUT' in out:
