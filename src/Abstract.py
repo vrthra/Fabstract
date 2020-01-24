@@ -517,7 +517,7 @@ def load_bug(bug_fn, grammar_meta):
     parser = Parser(non_canonical(grammar), start_symbol=start) # log=True)
     forest = parser.parse(bug_src.strip())
     tree = list(forest)[0]
-    return grammar_meta, tree
+    return grammar_meta, coalesce(tree)
 
 
 def load_parsed_bug(bug_fn, grammar_fn):
