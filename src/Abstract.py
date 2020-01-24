@@ -282,6 +282,9 @@ def identify_concrete_paths_to_nt(gtree, path=None):
     if not is_nt(name): return []
 
     my_paths = [path]
+    # for tokens we do not care about things below
+    if is_token(name): return my_paths
+
     for i, c in enumerate(children):
         ps = identify_concrete_paths_to_nt(c, path + [i])
         my_paths.extend(ps)
@@ -491,7 +494,9 @@ import os.path
 def is_token(val):
     assert val != '<>'
     assert (val[0], val[-1]) == ('<', '>')
-    return val[1].isupper() or val == '<_SKIP>'
+    if val[1].isupper(): return True
+    if val[1] == '_': return val[2].isupper() # token derived.
+    return False
 
 
 def coalesce(tree):
