@@ -81,7 +81,7 @@ def count_nodes(node):
     name, children, *_ = node
     if not children:
         return 0
-    return sum(count_leaves(i) for i in children) + 1
+    return sum(count_nodes(i) for i in children) + 1
 
 
 # ### Fuzzer
@@ -475,7 +475,7 @@ def get_abstraction(grammar_, my_input, predicate, max_checks=100):
     min_tree = reduction(d_tree, grammar, predicate)
     min_s = tree_to_string(min_tree)
     if LOG:
-        print('reduction:', count_leaves(min_tree), flush=True)
+        print('reduction:', count_nodes(min_tree), count_leaves(min_tree), flush=True)
         print('min_tree:', repr(min_s), flush=True)
 
     dd_tree_ =  abstraction(min_tree, grammar, predicate, max_checks)
