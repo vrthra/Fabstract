@@ -801,10 +801,6 @@
       ],
       [
         "<_IdentifierStart_re_119>"
-      ],
-      [
-        "\\",
-        "<UnicodeEscapeSequence>"
       ]
     ],
     "<_Identifier_re_67>": [
@@ -823,22 +819,6 @@
     "<_IdentifierStart_re_119>": [
       [
         "<_IdentifierStart_CSET_118>"
-      ]
-    ],
-    "<UnicodeEscapeSequence>": [
-      [
-        "u",
-        "<HexDigit>",
-        "<HexDigit>",
-        "<HexDigit>",
-        "<HexDigit>"
-      ],
-      [
-        "u",
-        "{",
-        "<HexDigit>",
-        "<_UnicodeEscapeSequence_re_90>",
-        "}"
       ]
     ],
     "<_UnicodeLetter_re_121>": [
@@ -3503,9 +3483,6 @@
       ],
       [
         "<HexEscapeSequence>"
-      ],
-      [
-        "<UnicodeEscapeSequence>"
       ]
     ],
     "<_LineContinuation_re_102>": [
@@ -3519,9 +3496,6 @@
       ],
       [
         "\r"
-      ],
-      [
-        " "
       ],
       [
         " "
