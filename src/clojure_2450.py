@@ -14,7 +14,7 @@ def my_predicate(src):
         o = A.do('java -jar lang/clojure/compilers/clojure.jar'.split(' ') + [tmp.name])
         if o.returncode == 0: return PRes.failed
         out = o.stdout.decode()
-        if 'cannot be cast to class clojure.lang.MultiFn' in out:
+        if 'cannot be cast to clojure.lang.MultiFn' in out:
             return PRes.success
         elif 'Syntax error compiling' in out:
             return PRes.invalid
