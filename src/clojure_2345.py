@@ -11,7 +11,7 @@ def my_predicate(src):
         tname = tmp.name
         tmp.write(src.encode('UTF-8'))
         tmp.flush()
-        o = A.do('java -jar clojure/compilers/clojure.jar'.split(' ') + [tmp.name])
+        o = A.do('java -jar lang/clojure/compilers/clojure.jar'.split(' ') + [tmp.name])
         if o.returncode == 0: return PRes.failed
         out = o.stdout.decode()
         if 'Syntax error (VerifyError)' in out and 'Catch type is not a subclass of Throwable in exception handler 6' in out:
