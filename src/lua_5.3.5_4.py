@@ -59,4 +59,4 @@ def main(gf_fbjson, bug_fn):
 import sys
 if __name__ == '__main__':
     #main(*sys.argv[1:])
-    main('./lang/lua/grammar/Lua.fbjson', './lang/lua/bugs/4.lua')
+    main('./lang/lua/grammar/lua.fbjson', './lang/lua/bugs/4.lua')

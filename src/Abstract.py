@@ -584,10 +584,10 @@ def load_parsed_bug(bug_fn, grammar_fn):
 
 class LimitFuzzer(LimitFuzzer):
     def fuzz(self, key='<start>', max_depth=10):
-        with open('fuzz.out.js', 'a+') as f:
-            r = self.gen_key(key=key, depth=0, max_depth=max_depth)
-            print(json.dumps({'key': key, 'str':r}), file=f)
-            
+        #with open('fuzz.out.js', 'a+') as f:
+        #    r = self.gen_key(key=key, depth=0, max_depth=max_depth)
+        #    print(json.dumps({'key': key, 'str':r}), file=f)
+        #    
         return self.gen_key(key=key, depth=0, max_depth=max_depth)
     
     def gen_key(self, key, depth, max_depth):
