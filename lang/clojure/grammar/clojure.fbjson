@@ -1,38 +1,38 @@
 {
-  "[start]": "<file>",
+  "[start]": "<cfile>",
   "[grammar]": {
-    "<file>": [
+    "<cfile>": [
       [
-        "<_file_re_1>",
-        "<EOF_sp_>"
+        "<_cfile_re_1>",
+        "<_EOF_sp_>"
       ]
     ],
-    "<_file_re_1>": [
+    "<_cfile_re_1>": [
       [
-        "<_file_STAR_0>"
+        "<_cfile_STAR_0>"
       ]
     ],
-    "<EOF_sp_>": [
+    "<_EOF_sp_>": [
       [
-        "<>"
+        "<_SKIP>"
       ]
     ],
-    "<_file_STAR_0>": [
+    "<_cfile_STAR_0>": [
       [],
       [
         "<form>",
-        "<_file_STAR_0>"
+        "<_cfile_STAR_0>"
       ]
     ],
     "<form>": [
       [
-        "<list>"
+        "<clist>"
+      ],
+      [
+        "<cmap>"
       ],
       [
         "<literal>"
-      ],
-      [
-        "<map>"
       ],
       [
         "<reader_macro>"
@@ -41,18 +41,27 @@
         "<vector>"
       ]
     ],
-    "<list>": [
+    "<clist>": [
       [
-        "<>",
+        "<_SKIP>",
         "(",
         "<forms>",
-        "<>",
+        "<_SKIP>",
         ")"
+      ]
+    ],
+    "<cmap>": [
+      [
+        "<_SKIP>",
+        "{",
+        "<_cmap_re_7>",
+        "<_SKIP>",
+        "}"
       ]
     ],
     "<literal>": [
       [
-        "<BOOLEAN_sp_>"
+        "<_BOOLEAN_sp_>"
       ],
       [
         "<character>"
@@ -76,18 +85,15 @@
         "<symbol>"
       ]
     ],
-    "<map>": [
-      [
-        "<>",
-        "{",
-        "<_map_re_7>",
-        "<>",
-        "}"
-      ]
-    ],
     "<reader_macro>": [
       [
         "<backtick>"
+      ],
+      [
+        "<clambda>"
+      ],
+      [
+        "<cset>"
       ],
       [
         "<deref>"
@@ -105,9 +111,6 @@
         "<host_expr>"
       ],
       [
-        "<lambda>"
-      ],
-      [
         "<meta_data>"
       ],
       [
@@ -115,9 +118,6 @@
       ],
       [
         "<regex>"
-      ],
-      [
-        "<set>"
       ],
       [
         "<tag>"
@@ -134,18 +134,18 @@
     ],
     "<vector>": [
       [
-        "<>",
+        "<_SKIP>",
         "[",
         "<forms>",
-        "<>",
+        "<_SKIP>",
         "]"
       ]
     ],
-    "<>": [
+    "<_SKIP>": [
       [],
       [
-        "<>",
-        "<>"
+        "<_SKIP>",
+        "<_SKIP>"
       ],
       [
         "<TRASH>"
@@ -158,43 +158,43 @@
     ],
     "<TRASH>": [
       [
-        "<_TRASH_re_107>"
+        "<_TRASH_re_109>"
       ]
     ],
-    "<_TRASH_re_107>": [
+    "<_TRASH_re_109>": [
       [
-        "<_TRASH_OR_104>"
+        "<_TRASH_OR_106>"
       ]
     ],
-    "<_TRASH_OR_104>": [
+    "<_TRASH_OR_106>": [
       [
-        "<_TRASH_SEQ_105>"
+        "<_TRASH_SEQ_107>"
       ],
       [
-        "<_TRASH_SEQ_106>"
+        "<_TRASH_SEQ_108>"
       ]
     ],
-    "<_TRASH_SEQ_105>": [
+    "<_TRASH_SEQ_107>": [
       [
         "<WS>"
       ]
     ],
-    "<_TRASH_SEQ_106>": [
+    "<_TRASH_SEQ_108>": [
       [
         "<COMMENT>"
       ]
     ],
     "<WS>": [
       [
-        "<_WS_re_100>"
+        "<_WS_re_102>"
       ]
     ],
-    "<_WS_re_100>": [
+    "<_WS_re_102>": [
       [
-        "<_WS_CSET_99>"
+        "<_WS_CSET_101>"
       ]
     ],
-    "<_WS_CSET_99>": [
+    "<_WS_CSET_101>": [
       [
         "\t"
       ],
@@ -214,22 +214,22 @@
     "<COMMENT>": [
       [
         ";",
-        "<_COMMENT_re_103>"
+        "<_COMMENT_re_105>"
       ]
     ],
-    "<_COMMENT_re_103>": [
+    "<_COMMENT_re_105>": [
       [
-        "<_COMMENT_STAR_101>"
+        "<_COMMENT_STAR_103>"
       ]
     ],
-    "<_COMMENT_STAR_101>": [
+    "<_COMMENT_STAR_103>": [
       [],
       [
-        "<_COMMENT_CNOT_102>",
-        "<_COMMENT_STAR_101>"
+        "<_COMMENT_CNOT_104>",
+        "<_COMMENT_STAR_103>"
       ]
     ],
-    "<_COMMENT_CNOT_102>": [
+    "<_COMMENT_CNOT_104>": [
       [
         "\t"
       ],
@@ -528,9 +528,32 @@
         "<_forms_STAR_2>"
       ]
     ],
-    "<BOOLEAN_sp_>": [
+    "<_cmap_re_7>": [
       [
-        "<>",
+        "<_cmap_STAR_4>"
+      ]
+    ],
+    "<_cmap_STAR_4>": [
+      [],
+      [
+        "<_cmap_OR_5>",
+        "<_cmap_STAR_4>"
+      ]
+    ],
+    "<_cmap_OR_5>": [
+      [
+        "<_cmap_SEQ_6>"
+      ]
+    ],
+    "<_cmap_SEQ_6>": [
+      [
+        "<form>",
+        "<form>"
+      ]
+    ],
+    "<_BOOLEAN_sp_>": [
+      [
+        "<_SKIP>",
         "<BOOLEAN>"
       ]
     ],
@@ -555,34 +578,34 @@
     ],
     "<nil>": [
       [
-        "<NIL_sp_>"
+        "<_NIL_sp_>"
       ]
     ],
     "<number>": [
       [
-        "<FLOAT_sp_>"
+        "<_FLOAT_sp_>"
       ],
       [
-        "<LONG_sp_>"
+        "<_LONG_sp_>"
       ],
       [
         "<bign>"
       ],
       [
-        "<bin>"
+        "<cbin>"
       ],
       [
-        "<hex>"
+        "<chex>"
       ]
     ],
     "<param_name>": [
       [
-        "<PARAM_NAME_sp_>"
+        "<_PARAM_NAME_sp_>"
       ]
     ],
     "<string>": [
       [
-        "<STRING_sp_>"
+        "<_STRING_sp_>"
       ]
     ],
     "<symbol>": [
@@ -603,22 +626,22 @@
     ],
     "<any_char>": [
       [
-        "<CHAR_ANY_sp_>"
+        "<_CHAR_ANY_sp_>"
       ]
     ],
     "<named_char>": [
       [
-        "<CHAR_NAMED_sp_>"
+        "<_CHAR_NAMED_sp_>"
       ]
     ],
     "<u_hex_quad>": [
       [
-        "<CHAR_U_sp_>"
+        "<_CHAR_U_sp_>"
       ]
     ],
-    "<CHAR_ANY_sp_>": [
+    "<_CHAR_ANY_sp_>": [
       [
-        "<>",
+        "<_SKIP>",
         "<CHAR_ANY>"
       ]
     ],
@@ -935,9 +958,9 @@
         "~"
       ]
     ],
-    "<CHAR_NAMED_sp_>": [
+    "<_CHAR_NAMED_sp_>": [
       [
-        "<>",
+        "<_SKIP>",
         "<CHAR_NAMED>"
       ]
     ],
@@ -1002,9 +1025,9 @@
         "backspace"
       ]
     ],
-    "<CHAR_U_sp_>": [
+    "<_CHAR_U_sp_>": [
       [
-        "<>",
+        "<_SKIP>",
         "<CHAR_U>"
       ]
     ],
@@ -1153,23 +1176,23 @@
     ],
     "<macro_keyword>": [
       [
-        "<>",
+        "<_SKIP>",
         ":",
-        "<>",
+        "<_SKIP>",
         ":",
         "<symbol>"
       ]
     ],
     "<simple_keyword>": [
       [
-        "<>",
+        "<_SKIP>",
         ":",
         "<symbol>"
       ]
     ],
-    "<NIL_sp_>": [
+    "<_NIL_sp_>": [
       [
-        "<>",
+        "<_SKIP>",
         "<NIL>"
       ]
     ],
@@ -1178,31 +1201,31 @@
         "nil"
       ]
     ],
-    "<FLOAT_sp_>": [
+    "<_FLOAT_sp_>": [
       [
-        "<>",
+        "<_SKIP>",
         "<FLOAT>"
       ]
     ],
-    "<LONG_sp_>": [
+    "<_LONG_sp_>": [
       [
-        "<>",
+        "<_SKIP>",
         "<LONG>"
       ]
     ],
     "<bign>": [
       [
-        "<BIGN_sp_>"
+        "<_BIGN_sp_>"
       ]
     ],
-    "<bin>": [
+    "<cbin>": [
       [
-        "<BIN_sp_>"
+        "<_BIN_sp_>"
       ]
     ],
-    "<hex>": [
+    "<chex>": [
       [
-        "<HEX_sp_>"
+        "<_HEX_sp_>"
       ]
     ],
     "<FLOAT>": [
@@ -1523,9 +1546,9 @@
         "l"
       ]
     ],
-    "<BIGN_sp_>": [
+    "<_BIGN_sp_>": [
       [
-        "<>",
+        "<_SKIP>",
         "<BIGN>"
       ]
     ],
@@ -1606,9 +1629,9 @@
         "n"
       ]
     ],
-    "<BIN_sp_>": [
+    "<_BIN_sp_>": [
       [
-        "<>",
+        "<_SKIP>",
         "<BIN>"
       ]
     ],
@@ -1654,9 +1677,9 @@
         "1"
       ]
     ],
-    "<HEX_sp_>": [
+    "<_HEX_sp_>": [
       [
-        "<>",
+        "<_SKIP>",
         "<HEX>"
       ]
     ],
@@ -1694,19 +1717,19 @@
         "<_HEX_PLUS_43>"
       ]
     ],
-    "<PARAM_NAME_sp_>": [
+    "<_PARAM_NAME_sp_>": [
       [
-        "<>",
+        "<_SKIP>",
         "<PARAM_NAME>"
       ]
     ],
     "<PARAM_NAME>": [
       [
         "%",
-        "<_PARAM_NAME_re_87>"
+        "<_PARAM_NAME_re_89>"
       ]
     ],
-    "<_PARAM_NAME_re_87>": [
+    "<_PARAM_NAME_re_89>": [
       [
         "<_PARAM_NAME_Q_76>"
       ]
@@ -1722,7 +1745,7 @@
         "<_PARAM_NAME_SEQ_78>"
       ],
       [
-        "<_PARAM_NAME_SEQ_86>"
+        "<_PARAM_NAME_SEQ_88>"
       ]
     ],
     "<_PARAM_NAME_SEQ_78>": [
@@ -1730,7 +1753,7 @@
         "<_PARAM_NAME_OR_79>"
       ]
     ],
-    "<_PARAM_NAME_SEQ_86>": [
+    "<_PARAM_NAME_SEQ_88>": [
       [
         "&"
       ]
@@ -1743,7 +1766,7 @@
     "<_PARAM_NAME_SEQ_80>": [
       [
         "<_PARAM_NAME_OR_81>",
-        "<_PARAM_NAME_STAR_83>"
+        "<_PARAM_NAME_STAR_84>"
       ]
     ],
     "<_PARAM_NAME_OR_81>": [
@@ -1751,31 +1774,92 @@
         "<_PARAM_NAME_SEQ_82>"
       ]
     ],
-    "<_PARAM_NAME_STAR_83>": [
+    "<_PARAM_NAME_STAR_84>": [
       [],
       [
-        "<_PARAM_NAME_OR_84>",
-        "<_PARAM_NAME_STAR_83>"
+        "<_PARAM_NAME_OR_85>",
+        "<_PARAM_NAME_STAR_84>"
       ]
     ],
     "<_PARAM_NAME_SEQ_82>": [
       [
-        "123456789"
+        "<_PARAM_NAME_CHARRANGE_83>"
       ]
     ],
-    "<_PARAM_NAME_OR_84>": [
+    "<_PARAM_NAME_CHARRANGE_83>": [
       [
-        "<_PARAM_NAME_SEQ_85>"
+        "1"
+      ],
+      [
+        "2"
+      ],
+      [
+        "3"
+      ],
+      [
+        "4"
+      ],
+      [
+        "5"
+      ],
+      [
+        "6"
+      ],
+      [
+        "7"
+      ],
+      [
+        "8"
+      ],
+      [
+        "9"
       ]
     ],
-    "<_PARAM_NAME_SEQ_85>": [
+    "<_PARAM_NAME_OR_85>": [
       [
-        "0123456789"
+        "<_PARAM_NAME_SEQ_86>"
       ]
     ],
-    "<STRING_sp_>": [
+    "<_PARAM_NAME_SEQ_86>": [
       [
-        "<>",
+        "<_PARAM_NAME_CHARRANGE_87>"
+      ]
+    ],
+    "<_PARAM_NAME_CHARRANGE_87>": [
+      [
+        "0"
+      ],
+      [
+        "1"
+      ],
+      [
+        "2"
+      ],
+      [
+        "3"
+      ],
+      [
+        "4"
+      ],
+      [
+        "5"
+      ],
+      [
+        "6"
+      ],
+      [
+        "7"
+      ],
+      [
+        "8"
+      ],
+      [
+        "9"
+      ]
+    ],
+    "<_STRING_sp_>": [
+      [
+        "<_SKIP>",
         "<STRING>"
       ]
     ],
@@ -1813,7 +1897,7 @@
     ],
     "<_STRING_SEQ_18>": [
       [
-        "\\\\",
+        "\\",
         "\""
       ]
     ],
@@ -2118,17 +2202,17 @@
     ],
     "<ns_symbol>": [
       [
-        "<NS_SYMBOL_sp_>"
+        "<_NS_SYMBOL_sp_>"
       ]
     ],
     "<simple_sym>": [
       [
-        "<SYMBOL_sp_>"
+        "<_SYMBOL_sp_>"
       ]
     ],
-    "<NS_SYMBOL_sp_>": [
+    "<_NS_SYMBOL_sp_>": [
       [
-        "<>",
+        "<_SKIP>",
         "<NS_SYMBOL>"
       ]
     ],
@@ -2142,8 +2226,8 @@
     "<NAME>": [
       [
         "<SYMBOL_HEAD>",
-        "<_NAME_re_89>",
-        "<_NAME_re_94>"
+        "<_NAME_re_91>",
+        "<_NAME_re_96>"
       ]
     ],
     "<SYMBOL>": [
@@ -2159,68 +2243,238 @@
     ],
     "<SYMBOL_HEAD>": [
       [
-        "<_SYMBOL_HEAD_re_97>"
+        "<_SYMBOL_HEAD_re_98>"
       ]
     ],
-    "<_NAME_re_89>": [
-      [
-        "<_NAME_STAR_88>"
-      ]
-    ],
-    "<_NAME_re_94>": [
+    "<_NAME_re_91>": [
       [
         "<_NAME_STAR_90>"
       ]
     ],
-    "<_SYMBOL_HEAD_re_97>": [
+    "<_NAME_re_96>": [
       [
-        "<_SYMBOL_HEAD_SEQ_95>"
+        "<_NAME_STAR_92>"
       ]
     ],
-    "<_SYMBOL_HEAD_SEQ_95>": [
+    "<_SYMBOL_HEAD_re_98>": [
       [
-        "0123456789",
-        "^",
-        "`",
-        "'",
-        "\"",
-        "#",
-        "~",
-        "@",
-        ":",
-        "/",
-        "%",
-        "(",
-        ")",
-        "[",
-        "]",
-        "{",
-        "}",
-        "<_SYMBOL_HEAD_CSET_96>"
+        "<_SYMBOL_HEAD_CNOT_97>"
       ]
     ],
-    "<_SYMBOL_HEAD_CSET_96>": [
+    "<_SYMBOL_HEAD_CNOT_97>": [
       [
-        "\t"
+        "\u000b"
       ],
       [
-        "\n"
+        "\f"
       ],
       [
-        "\r"
+        "!"
       ],
       [
-        " "
+        "$"
       ],
       [
-        ","
+        "&"
+      ],
+      [
+        "*"
+      ],
+      [
+        "+"
+      ],
+      [
+        "-"
+      ],
+      [
+        "."
+      ],
+      [
+        ";"
+      ],
+      [
+        "<"
+      ],
+      [
+        "="
+      ],
+      [
+        ">"
+      ],
+      [
+        "?"
+      ],
+      [
+        "A"
+      ],
+      [
+        "B"
+      ],
+      [
+        "C"
+      ],
+      [
+        "D"
+      ],
+      [
+        "E"
+      ],
+      [
+        "F"
+      ],
+      [
+        "G"
+      ],
+      [
+        "H"
+      ],
+      [
+        "I"
+      ],
+      [
+        "J"
+      ],
+      [
+        "K"
+      ],
+      [
+        "L"
+      ],
+      [
+        "M"
+      ],
+      [
+        "N"
+      ],
+      [
+        "O"
+      ],
+      [
+        "P"
+      ],
+      [
+        "Q"
+      ],
+      [
+        "R"
+      ],
+      [
+        "S"
+      ],
+      [
+        "T"
+      ],
+      [
+        "U"
+      ],
+      [
+        "V"
+      ],
+      [
+        "W"
+      ],
+      [
+        "X"
+      ],
+      [
+        "Y"
+      ],
+      [
+        "Z"
+      ],
+      [
+        "\\"
+      ],
+      [
+        "_"
+      ],
+      [
+        "a"
+      ],
+      [
+        "b"
+      ],
+      [
+        "c"
+      ],
+      [
+        "d"
+      ],
+      [
+        "e"
+      ],
+      [
+        "f"
+      ],
+      [
+        "g"
+      ],
+      [
+        "h"
+      ],
+      [
+        "i"
+      ],
+      [
+        "j"
+      ],
+      [
+        "k"
+      ],
+      [
+        "l"
+      ],
+      [
+        "m"
+      ],
+      [
+        "n"
+      ],
+      [
+        "o"
+      ],
+      [
+        "p"
+      ],
+      [
+        "q"
+      ],
+      [
+        "r"
+      ],
+      [
+        "s"
+      ],
+      [
+        "t"
+      ],
+      [
+        "u"
+      ],
+      [
+        "v"
+      ],
+      [
+        "w"
+      ],
+      [
+        "x"
+      ],
+      [
+        "y"
+      ],
+      [
+        "z"
+      ],
+      [
+        "|"
       ]
     ],
-    "<_NAME_STAR_88>": [
+    "<_NAME_STAR_90>": [
       [],
       [
         "<SYMBOL_REST>",
-        "<_NAME_STAR_88>"
+        "<_NAME_STAR_90>"
       ]
     ],
     "<SYMBOL_REST>": [
@@ -2231,94 +2485,121 @@
         "<SYMBOL_HEAD>"
       ],
       [
-        "<_SYMBOL_REST_re_98>"
+        "<_SYMBOL_REST_re_100>"
       ]
     ],
-    "<_SYMBOL_REST_re_98>": [
+    "<_SYMBOL_REST_re_100>": [
       [
-        "0123456789"
+        "<_SYMBOL_REST_CHARRANGE_99>"
       ]
     ],
-    "<_NAME_STAR_90>": [
+    "<_SYMBOL_REST_CHARRANGE_99>": [
+      [
+        "0"
+      ],
+      [
+        "1"
+      ],
+      [
+        "2"
+      ],
+      [
+        "3"
+      ],
+      [
+        "4"
+      ],
+      [
+        "5"
+      ],
+      [
+        "6"
+      ],
+      [
+        "7"
+      ],
+      [
+        "8"
+      ],
+      [
+        "9"
+      ]
+    ],
+    "<_NAME_STAR_92>": [
       [],
       [
-        "<_NAME_OR_91>",
-        "<_NAME_STAR_90>"
+        "<_NAME_OR_93>",
+        "<_NAME_STAR_92>"
       ]
     ],
-    "<_NAME_OR_91>": [
+    "<_NAME_OR_93>": [
       [
-        "<_NAME_SEQ_92>"
+        "<_NAME_SEQ_94>"
       ]
     ],
-    "<_NAME_SEQ_92>": [
+    "<_NAME_SEQ_94>": [
       [
         ":",
-        "<_NAME_PLUS_93>"
+        "<_NAME_PLUS_95>"
       ]
     ],
-    "<_NAME_PLUS_93>": [
+    "<_NAME_PLUS_95>": [
       [
         "<SYMBOL_REST>"
       ],
       [
         "<SYMBOL_REST>",
-        "<_NAME_PLUS_93>"
+        "<_NAME_PLUS_95>"
       ]
     ],
-    "<SYMBOL_sp_>": [
+    "<_SYMBOL_sp_>": [
       [
-        "<>",
+        "<_SKIP>",
         "<SYMBOL>"
-      ]
-    ],
-    "<_map_re_7>": [
-      [
-        "<_map_STAR_4>"
-      ]
-    ],
-    "<_map_STAR_4>": [
-      [],
-      [
-        "<_map_OR_5>",
-        "<_map_STAR_4>"
-      ]
-    ],
-    "<_map_OR_5>": [
-      [
-        "<_map_SEQ_6>"
-      ]
-    ],
-    "<_map_SEQ_6>": [
-      [
-        "<form>",
-        "<form>"
       ]
     ],
     "<backtick>": [
       [
-        "<>",
+        "<_SKIP>",
         "`",
         "<form>"
       ]
     ],
+    "<clambda>": [
+      [
+        "<_SKIP>",
+        "#(",
+        "<_clambda_re_9>",
+        "<_SKIP>",
+        ")"
+      ]
+    ],
+    "<cset>": [
+      [
+        "<_SKIP>",
+        "#{",
+        "<forms>",
+        "<_SKIP>",
+        "}"
+      ]
+    ],
     "<deref>": [
       [
-        "<>",
+        "<_SKIP>",
         "@",
         "<form>"
       ]
     ],
     "<discard>": [
       [
-        "<>",
+        "<_SKIP>",
         "#_",
         "<form>"
       ]
     ],
     "<dispatch>": [
       [
-        "<>",
+        "<_SKIP>",
         "#",
         "<symbol>",
         "<form>"
@@ -2326,61 +2607,43 @@
     ],
     "<gensym>": [
       [
-        "<SYMBOL_sp_>",
-        "<>",
+        "<_SYMBOL_sp_>",
+        "<_SKIP>",
         "#"
       ]
     ],
     "<host_expr>": [
       [
-        "<>",
+        "<_SKIP>",
         "#+",
         "<form>",
         "<form>"
       ]
     ],
-    "<lambda>": [
-      [
-        "<>",
-        "#(",
-        "<_lambda_re_9>",
-        "<>",
-        ")"
-      ]
-    ],
     "<meta_data>": [
       [
-        "<>",
+        "<_SKIP>",
         "#^",
         "<_meta_data_re_13>"
       ]
     ],
     "<quote>": [
       [
-        "<>",
+        "<_SKIP>",
         "'",
         "<form>"
       ]
     ],
     "<regex>": [
       [
-        "<>",
+        "<_SKIP>",
         "#",
         "<string>"
       ]
     ],
-    "<set>": [
-      [
-        "<>",
-        "#{",
-        "<forms>",
-        "<>",
-        "}"
-      ]
-    ],
     "<tag>": [
       [
-        "<>",
+        "<_SKIP>",
         "^",
         "<form>",
         "<form>"
@@ -2388,35 +2651,35 @@
     ],
     "<unquote>": [
       [
-        "<>",
+        "<_SKIP>",
         "~",
         "<form>"
       ]
     ],
     "<unquote_splicing>": [
       [
-        "<>",
+        "<_SKIP>",
         "~@",
         "<form>"
       ]
     ],
     "<var_quote>": [
       [
-        "<>",
+        "<_SKIP>",
         "#'",
         "<symbol>"
       ]
     ],
-    "<_lambda_re_9>": [
+    "<_clambda_re_9>": [
       [
-        "<_lambda_STAR_8>"
+        "<_clambda_STAR_8>"
       ]
     ],
-    "<_lambda_STAR_8>": [
+    "<_clambda_STAR_8>": [
       [],
       [
         "<form>",
-        "<_lambda_STAR_8>"
+        "<_clambda_STAR_8>"
       ]
     ],
     "<_meta_data_re_13>": [
@@ -2434,7 +2697,7 @@
     ],
     "<_meta_data_SEQ_11>": [
       [
-        "<map>",
+        "<cmap>",
         "<form>"
       ]
     ],
