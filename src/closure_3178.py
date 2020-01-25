@@ -25,4 +25,4 @@ def my_predicate(src):
 
 import sys
 if __name__ == '__main__':
-    I.main('./lang/js/grammar/javascript.fbjson', './lang/js/bugs/closure.3718.js', my_predicate, max_checks=100)
+    I.main('./lang/js/grammar/javascript.fbjson', './lang/js/bugs/closure.3178.js', my_predicate, max_checks=100)
