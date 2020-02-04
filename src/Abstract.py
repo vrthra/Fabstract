@@ -14,6 +14,7 @@ import sys
 sys.setrecursionlimit(9000)
 LOG = False
 KEY = '()'
+NAME = None
 # Here is our failing test:
 class PRes(Enum):
     success = 1
@@ -404,6 +405,7 @@ def check(tval, dtree, grammar, predicate, unverified, max_checks):
     checks = 0
     limit = 0
     abstract = True
+    rstr = None
     while checks < max_checks:
         limit += 1
         if limit >= MAX_LIMIT:
@@ -433,10 +435,16 @@ def check(tval, dtree, grammar, predicate, unverified, max_checks):
                 continue
     if abstract:
         if status == St.unchecked:
+            print(node[0], 'abstract: unverified')
             return [(path, St.unverified)]
         else:
+            print(node[0], 'abstract: verified')
             return [(path, St.verified)]
     else:
+        if status == St.unverified:
+            print(KEY, 'not abstract.')
+            print(repr(rstr))
+
         if is_token(key): return []
         paths = []
         if status == St.unchecked:
@@ -629,6 +637,8 @@ def reduction(tree, grammar, predicate):
 
 import tempfile
 import subprocess
+import os
+import signal
 
 class O:
     def __init__(self, **keys): self.__dict__.update(keys)
@@ -644,8 +654,8 @@ def do(command, env=None, shell=False, log=False, **args):
         if log:
             with open('_do.log', 'a+') as f:
                 print(json.dumps({'cmd':command, 'env':env, 'exitcode':result.returncode}), env, file=f)
+        result.kill()
         return O(returncode=result.returncode, stdout=stdout, stderr=stderr)
     except subprocess.TimeoutExpired as e:
+        result.kill()
         return O(returncode=255, stdout=b'TIMEOUT', stderr=b'')
-
-

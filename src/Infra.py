@@ -19,6 +19,7 @@ def main(gf_fbjson, bug_fn, pred, max_checks=A.MAX_CHECKS):
     A.LOG = True
     os.system('mkdir -p results')
     LOG_NAME = "./results/%s.log.json" % name
+    A.NAME = name
     MY_PREDICATE = pred
     os.system('rm -f %s' % LOG_NAME)
     grammar_fn = gf_fbjson
