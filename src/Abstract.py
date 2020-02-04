@@ -322,7 +322,11 @@ def identify_concrete_paths_to_nt(gtree, path=None):
         my_paths.extend(ps)
     return my_paths
 
-
+# in finding similar nodes, we have to give first preference
+# to the paths with maximum *amount* of common elements that can
+# be identified on a string in terms of character count. No
+# similarity analysis should be allowed on the nodes where a
+# previous analysis detected similarity
 def find_similar_nodes(gtree, cpaths):
     strings = {}
     for path in cpaths:
