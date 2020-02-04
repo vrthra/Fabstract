@@ -7,6 +7,7 @@ TIMEOUT=5
 MAX_CHECKS=100
 MAX_LIMIT=1000
 FIND_COUNTER_EXAMPLE = True
+MIN_EXAMPLES = 1
 
 import re, copy
 from enum import Enum
@@ -411,7 +412,7 @@ def check(tval, dtree, grammar, predicate, unverified, max_checks):
         if limit >= MAX_LIMIT:
             # giveup.
             if FIND_COUNTER_EXAMPLE:
-                if checks > 1:
+                if checks > MIN_EXAMPLES:
                     abstract = True
                 else:
                     abstract = False
