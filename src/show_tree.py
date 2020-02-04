@@ -5,6 +5,24 @@ import json
 import sys
 
 
+def general_str(tree):
+    name, children, *general_ = tree
+    if not A.is_nt(name): return name
+    v = A.tree_to_string(tree)
+    if not v.strip(): return v
+    general = A.e_g(general_)
+    if general:
+        if A.is_nt(name):
+            if name == '<>': return v
+            return name
+        else:
+            assert not children
+            return name
+    res = []
+    for c in children:
+        x = general_str(c)
+        res.append(x)
+    return ''.join(res)
 
 def coalesce(tree):
     name, children, *rest = tree
@@ -28,6 +46,7 @@ if __name__ == '__main__':
         res = json.load(fp=f)
         print(res['min_s'])
         print(res['abs_s'])
+        print(general_str(res['abs_t']))
         abs_t = coalesce(res['abs_t'])
 
         format_node=lambda x: (repr(x[0]) if x[-1] else repr(x[0]))
