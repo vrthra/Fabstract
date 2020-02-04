@@ -62,6 +62,25 @@ def tree_to_string(tree, wrap=lambda ntree, depth, name, string: string, depth=0
         return wrap(tree, depth, name, ''.join([tree_to_string(c, wrap, depth-1) for c in children]))
 
 
+def general_str(tree):
+    name, children, *general_ = tree
+    if not A.is_nt(name): return name
+    v = A.tree_to_string(tree)
+    if not v.strip(): return v
+    general = A.e_g(general_)
+    if general:
+        if A.is_nt(name):
+            if name == '<>': return v
+            return name
+        else:
+            assert not children
+            return name
+    res = []
+    for c in children:
+        x = general_str(c)
+        res.append(x)
+    return ''.join(res)
+
 def limit_depth(t, d, n, s):
     if d == 0:
         return n
@@ -514,7 +533,8 @@ def get_abstraction(grammar_, my_input, predicate, max_checks=100):
 
     dd_tree_ =  abstraction(min_tree, grammar, predicate, max_checks)
     dd_tree = identify_similarities(grammar, predicate, dd_tree_, max_checks)
-    s = tree_to_string(dd_tree, wrap=limit_gen_s)
+    #s = tree_to_string(dd_tree, wrap=limit_gen_s)
+    s = general_str(dd_tree)
     return min_s, s, dd_tree
 
 # # Experiments
