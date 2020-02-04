@@ -291,13 +291,19 @@ def identify_concrete_paths_to_nt(gtree, path=None):
         my_paths.extend(ps)
     return my_paths
 
+USE_NT_NAME = True
+
 def find_similar_nodes(gtree, cpaths):
     strings = {}
     for path in cpaths:
         n = get_child(gtree, path)
         s = tree_to_string(n)
         if not len(s): continue
-        strings.setdefault((n[0], s), []).append(path)
+        if USE_NT_NAME:
+            key = (n[0], s)
+        else:
+            key = s
+        strings.setdefault(key, []).append(path)
     return {s:strings[s] for s in strings if len(strings[s]) > 1}
 
 def are_these_similar(tkey, paths, grammar, gtree, predicate, max_checks=100):
@@ -499,7 +505,7 @@ def is_token(val):
     assert val != '<>'
     assert (val[0], val[-1]) == ('<', '>')
     if val[1].isupper(): return True
-    if val[1] == '_': return val[2].isupper() # token derived.
+    #if val[1] == '_': return val[2].isupper() # token derived.
     return False
 
 
