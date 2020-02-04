@@ -64,7 +64,7 @@ def tree_to_string(tree, wrap=lambda ntree, depth, name, string: string, depth=0
 
 def general_str(tree):
     name, children, *general_ = tree
-    if not A.is_nt(name): return name
+    if not is_nt(name): return name
     v = A.tree_to_string(tree)
     if not v.strip(): return v
     general = A.e_g(general_)
