@@ -29,11 +29,13 @@ if __name__ == '__main__':
         print(res['min_s'])
         print(res['abs_s'])
         abs_t = coalesce(res['abs_t'])
-        print(json.dumps(coalesce(res['abs_t']), indent=4))
 
-        if len(sys.argv) > 2 and sys.argv[2] == '-c':
-            format_node=lambda x: ((T.Colors.CRED2 + repr(x[0]) + T.Colors.ENDC) if x[-1] else repr(x[0]))
+        format_node=lambda x: (repr(x[0]) if x[-1] else repr(x[0]))
+        if len(sys.argv) > 2:
+            if sys.argv[2] == '-c':
+                format_node=lambda x: ((T.Colors.CRED2 + repr(x[0]) + T.Colors.ENDC) if x[-1] else repr(x[0]))
+                print(T.format_tree(abs_t,format_node=format_node, get_children=lambda x: x[1]))
+            elif sys.argv[2] == '-t':
+                print(json.dumps(coalesce(res['abs_t']), indent=4))
         else:
-            format_node=lambda x: (repr(x[0]) if x[-1] else repr(x[0]))
-
-        print(T.format_tree(abs_t,format_node=format_node, get_children=lambda x: x[1]))
+            print(T.format_tree(abs_t,format_node=format_node, get_children=lambda x: x[1]))
