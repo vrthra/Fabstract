@@ -19,11 +19,10 @@ def my_predicate(src):
         elif 'ERROR - Parse error' in out:
             return PRes.invalid
         elif 'TIMEOUT' in out:
-            # timeout should be failed.
-            return PRes.failed
+            return PRes.invalid
         return PRes.failed
 
 
 import sys
 if __name__ == '__main__':
-    I.main('./lang/js/grammar/javascript.fbjson', './lang/js/bugs/rhino.386.js', my_predicate, max_checks=100)
+    I.main('./lang/js/grammar/javascript.fbjson', './lang/js/bugs/rhino.386.js', my_predicate)

@@ -16,13 +16,14 @@ def my_predicate(src):
         out = o.stdout.decode()
         if 'java.lang.IllegalStateException' in out:
             return PRes.success
-        elif 'syntax errors.' in out:
+        elif 'syntax error' in out:
+            return PRes.invalid
+        elif 'syntax errors' in out:
             return PRes.invalid
         elif 'TIMEOUT' in out:
-            # timeout should be failed.
-            return PRes.failed
+            return PRes.invalid
         return PRes.failed
 
 import sys
 if __name__ == '__main__':
-    I.main('./lang/js/grammar/javascript.fbjson', './lang/js/bugs/rhino.385.js', my_predicate, max_checks=100)
+    I.main('./lang/js/grammar/javascript.fbjson', './lang/js/bugs/rhino.385.js', my_predicate)

@@ -20,10 +20,9 @@ def my_predicate(src):
         elif 'stack traceback' in out:
             return PRes.invalid
         elif 'TIMEOUT' in out:
-            # timeout should be failed.
-            return PRes.failed
+            return PRes.invalid
         return PRes.failed
 
 import sys
 if __name__ == '__main__':
-    I.main('./lang/lua/grammar/lua.fbjson', './lang/lua/bugs/4.lua', my_predicate, max_checks=100)
+    I.main('./lang/lua/grammar/lua.fbjson', './lang/lua/bugs/4.lua', my_predicate)

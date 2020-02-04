@@ -13,7 +13,7 @@ def _predicate(src):
     return res
 
 
-def main(gf_fbjson, bug_fn, pred, max_checks=100):
+def main(gf_fbjson, bug_fn, pred, max_checks=A.MAX_CHECKS):
     name = os.path.basename(bug_fn)
     global LOG_NAME, MY_PREDICATE
     A.LOG = True

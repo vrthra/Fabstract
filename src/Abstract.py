@@ -1,3 +1,13 @@
+USE_NT_NAME = True
+TIMEOUT=5
+
+# The idea here is either try MAX_LIMIT number of tries
+# for a counter example, or give up after `MAX_CHECKS`
+# valid reproductions.
+MAX_CHECKS=100
+MAX_LIMIT=1000
+FIND_COUNTER_EXAMPLE = True
+
 import re, copy
 from enum import Enum
 import sys
@@ -291,7 +301,6 @@ def identify_concrete_paths_to_nt(gtree, path=None):
         my_paths.extend(ps)
     return my_paths
 
-USE_NT_NAME = True
 
 def find_similar_nodes(gtree, cpaths):
     strings = {}
@@ -381,7 +390,6 @@ def generate(dtree, grammar, paths):
     return tree_to_string(res)
 
 check_counter = 0
-MAX_LIMIT=1000
 def check(tval, dtree, grammar, predicate, unverified, max_checks):
     global check_counter, KEY
     path, status = tval
@@ -399,12 +407,19 @@ def check(tval, dtree, grammar, predicate, unverified, max_checks):
     while checks < max_checks:
         limit += 1
         if limit >= MAX_LIMIT:
-            print('warn: giving up', node[0], 'after', MAX_LIMIT, 'invalid values with', checks, 'valid values abstract:', False)
             # giveup.
-            #if checks > 1:
-            #    abstract = True
-            #else:
-            abstract = False
+            if FIND_COUNTER_EXAMPLE:
+                if checks > 1:
+                    abstract = True
+                else:
+                    abstract = False
+            else:
+                abstract = False
+
+            print('warn: giving up', node[0], 'after', MAX_LIMIT,
+                    'and no counterexample found.'
+                    'invalid values with', checks,
+                    'valid values abstract:', abstract)
             break
         rstr = generate(dtree, grammar, [tval] + unverified)
         pres = predicate(rstr)
@@ -510,14 +525,14 @@ def is_token(val):
 
 
 def coalesce(tree):
-    name, children = tree
+    name, children, *rest = tree
     if not is_nt(name):
-        return (name, children)
+        return (name, children, *rest)
     elif is_token(name):
         v = tree_to_string(tree)
-        return (name, [(v, [])])
+        return (name, [(v, [])], *rest)
     else:
-        return (name, [coalesce(n) for n in children])
+        return (name, [coalesce(n) for n in children], *rest)
 
 
 def load_bug(bug_fn, grammar_meta):
@@ -612,9 +627,6 @@ def reduction(tree, grammar, predicate):
     return min_tree
 
 
-VALID_VALUES = {}
-N = 0
-
 import tempfile
 import subprocess
 
@@ -628,7 +640,7 @@ def do(command, env=None, shell=False, log=False, **args):
         stderr = subprocess.STDOUT,
     )
     try: 
-        stdout, stderr = result.communicate(timeout=10)
+        stdout, stderr = result.communicate(timeout=TIMEOUT)
         if log:
             with open('_do.log', 'a+') as f:
                 print(json.dumps({'cmd':command, 'env':env, 'exitcode':result.returncode}), env, file=f)

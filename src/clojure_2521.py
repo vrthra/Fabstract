@@ -19,10 +19,9 @@ def my_predicate(src):
         elif 'Syntax error compiling' in out:
             return PRes.invalid
         elif 'TIMEOUT' in out:
-            # timeout should be failed.
-            return PRes.failed
+            return PRes.invalid
         return PRes.failed
 
 import sys
 if __name__ == '__main__':
-    I.main('./lang/clojure/grammar/clojure.fbjson', './lang/clojure/bugs/clj-2521.clj', my_predicate, max_checks=100)
+    I.main('./lang/clojure/grammar/clojure.fbjson', './lang/clojure/bugs/clj-2521.clj', my_predicate)
