@@ -1,5 +1,4 @@
 import Abstract as A
-from Abstract import PRes
 import os
 import json
 g_predicate = {}
@@ -10,7 +9,7 @@ def _predicate(src):
     res = MY_PREDICATE(src)
     g_predicate[src] = res
     with open(LOG_NAME, 'a+') as f:
-        print(json.dumps({'src':src, 'res': str(res)}), file=f)
+        print(json.dumps({'key':A.KEY, 'src':src, 'res': str(res)}), file=f)
     return res
 
 
@@ -25,8 +24,8 @@ def main(gf_fbjson, bug_fn, pred, max_checks=100):
     grammar_fn = gf_fbjson
     meta, tree = A.load_parsed_bug(bug_fn, grammar_fn)
 
-    assert _predicate(A.tree_to_string(tree)) == PRes.success
-    assert _predicate('') == PRes.failed
+    assert _predicate(A.tree_to_string(tree)) == A.PRes.success
+    assert _predicate('') == A.PRes.failed
 
     min_s, abs_s, a_mintree = A.get_abstraction(meta,
                                A.tree_to_string(tree),

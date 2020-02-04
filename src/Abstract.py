@@ -3,6 +3,7 @@ from enum import Enum
 import sys
 sys.setrecursionlimit(9000)
 LOG = False
+KEY = '()'
 # Here is our failing test:
 class PRes(Enum):
     success = 1
@@ -305,6 +306,8 @@ def are_these_similar(tkey, paths, grammar, gtree, predicate, max_checks=100):
     gf = LimitFuzzer(grammar)
     nchecks = 0
     seen = set()
+    global KEY
+    KEY = 'similar: ' + name
     for i in range(max_checks):
         v = gf.fuzz(key=name)
         if v in seen: continue
@@ -374,10 +377,11 @@ def generate(dtree, grammar, paths):
 check_counter = 0
 MAX_LIMIT=1000
 def check(tval, dtree, grammar, predicate, unverified, max_checks):
-    global check_counter
+    global check_counter, KEY
     path, status = tval
     node = get_child(dtree, path)
     if LOG:
+        KEY = "%s:(%s)" % (node[0], tree_to_string(node))
         print(check_counter, 'check:', node[0], status)
         check_counter += 1
     key, children, *rest = node
@@ -408,18 +412,18 @@ def check(tval, dtree, grammar, predicate, unverified, max_checks):
                 continue
     if abstract:
         if status == St.unchecked:
-            newstatus = St.unverified
+            return [(path, St.unverified)]
         else:
-            newstatus = St.verified
-        return [(path, newstatus)]
+            return [(path, St.verified)]
     else:
         if is_token(key): return []
         paths = []
-        for i,child in enumerate(children):
-            if not is_nt(child[0]): continue
-            tval = (path + [i], St.unchecked)
-            p = check(tval, dtree, grammar, predicate, unverified, max_checks)
-            paths.extend(p)
+        if status == St.unchecked:
+            for i,child in enumerate(children):
+                if not is_nt(child[0]): continue
+                tval = (path + [i], St.unchecked)
+                p = check(tval, dtree, grammar, predicate, unverified, max_checks)
+                paths.extend(p)
         return paths
 
 
@@ -448,7 +452,7 @@ def abstraction(tree, grammar, predicate, max_checks):
     unverified = [([], St.unchecked)]
     verified = []
     while unverified:
-        v = unverified.pop()
+        v = unverified.pop(0)
         if LOG:
             node = get_child(tree, v[0])
             print(gen_counter, 'abstraction:', node[0], v[1])
