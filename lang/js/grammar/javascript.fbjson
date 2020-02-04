@@ -5,7 +5,7 @@
       [
         "<_program_re_341>",
         "<_program_re_343>",
-        "<EOF_sp_>"
+        "<_EOF_sp_>"
       ]
     ],
     "<_program_re_341>": [
@@ -18,7 +18,7 @@
         "<_program_Q_342>"
       ]
     ],
-    "<EOF_sp_>": [
+    "<_EOF_sp_>": [
       [
         "<_SKIP>"
       ]
@@ -26,10 +26,10 @@
     "<_program_Q_340>": [
       [],
       [
-        "<HashBangLine_sp_>"
+        "<_HashBangLine_sp_>"
       ]
     ],
-    "<HashBangLine_sp_>": [
+    "<_HashBangLine_sp_>": [
       [
         "<_SKIP>",
         "<HashBangLine>"
@@ -501,45 +501,45 @@
     ],
     "<breakStatement>": [
       [
-        "<Break_sp_>",
+        "<_Break_sp_>",
         "<_breakStatement_re_415>",
         "<eos>"
       ]
     ],
     "<classDeclaration>": [
       [
-        "<Class_sp_>",
-        "<Identifier_sp_>",
+        "<_Class_sp_>",
+        "<_Identifier_sp_>",
         "<classTail>"
       ]
     ],
     "<continueStatement>": [
       [
-        "<Continue_sp_>",
+        "<_Continue_sp_>",
         "<_continueStatement_re_411>",
         "<eos>"
       ]
     ],
     "<debuggerStatement>": [
       [
-        "<Debugger_sp_>",
+        "<_Debugger_sp_>",
         "<eos>"
       ]
     ],
     "<emptyStatement>": [
       [
-        "<SemiColon_sp_>"
+        "<_SemiColon_sp_>"
       ]
     ],
     "<exportStatement>": [
       [
-        "<Export_sp_>",
-        "<Default_sp_>",
+        "<_Export_sp_>",
+        "<_Default_sp_>",
         "<singleExpression>",
         "<eos>"
       ],
       [
-        "<Export_sp_>",
+        "<_Export_sp_>",
         "<_exportStatement_re_374>",
         "<eos>"
       ]
@@ -553,9 +553,9 @@
     "<functionDeclaration>": [
       [
         "<_functionDeclaration_re_448>",
-        "<Function_sp_>",
+        "<_Function_sp_>",
         "<_functionDeclaration_re_450>",
-        "<Identifier_sp_>",
+        "<_Identifier_sp_>",
         "<_SKIP>",
         "(",
         "<_functionDeclaration_re_452>",
@@ -570,7 +570,7 @@
     ],
     "<ifStatement>": [
       [
-        "<If_sp_>",
+        "<_If_sp_>",
         "<_SKIP>",
         "(",
         "<expressionSequence>",
@@ -582,15 +582,15 @@
     ],
     "<importStatement>": [
       [
-        "<Import_sp_>",
+        "<_Import_sp_>",
         "<importFromBlock>"
       ]
     ],
     "<iterationStatement>": [
       [
-        "<Do_sp_>",
+        "<_Do_sp_>",
         "<statement>",
-        "<While_sp_>",
+        "<_While_sp_>",
         "<_SKIP>",
         "(",
         "<expressionSequence>",
@@ -599,7 +599,7 @@
         "<eos>"
       ],
       [
-        "<For_sp_>",
+        "<_For_sp_>",
         "<_SKIP>",
         "(",
         "<_iterationStatement_re_393>",
@@ -614,30 +614,30 @@
         "<statement>"
       ],
       [
-        "<For_sp_>",
+        "<_For_sp_>",
         "<_SKIP>",
         "(",
         "<_iterationStatement_re_401>",
-        "<In_sp_>",
+        "<_In_sp_>",
         "<expressionSequence>",
         "<_SKIP>",
         ")",
         "<statement>"
       ],
       [
-        "<For_sp_>",
+        "<_For_sp_>",
         "<_iterationStatement_re_403>",
         "<_SKIP>",
         "(",
         "<_iterationStatement_re_407>",
-        "<Identifier_sp_>",
+        "<_Identifier_sp_>",
         "<expressionSequence>",
         "<_SKIP>",
         ")",
         "<statement>"
       ],
       [
-        "<While_sp_>",
+        "<_While_sp_>",
         "<_SKIP>",
         "(",
         "<expressionSequence>",
@@ -648,7 +648,7 @@
     ],
     "<labelledStatement>": [
       [
-        "<Identifier_sp_>",
+        "<_Identifier_sp_>",
         "<_SKIP>",
         ":",
         "<statement>"
@@ -656,14 +656,14 @@
     ],
     "<returnStatement>": [
       [
-        "<Return_sp_>",
+        "<_Return_sp_>",
         "<_returnStatement_re_419>",
         "<eos>"
       ]
     ],
     "<switchStatement>": [
       [
-        "<Switch_sp_>",
+        "<_Switch_sp_>",
         "<_SKIP>",
         "(",
         "<expressionSequence>",
@@ -674,14 +674,14 @@
     ],
     "<throwStatement>": [
       [
-        "<Throw_sp_>",
+        "<_Throw_sp_>",
         "<expressionSequence>",
         "<eos>"
       ]
     ],
     "<tryStatement>": [
       [
-        "<Try_sp_>",
+        "<_Try_sp_>",
         "<block>",
         "<_tryStatement_re_441>"
       ]
@@ -695,7 +695,7 @@
     ],
     "<withStatement>": [
       [
-        "<With_sp_>",
+        "<_With_sp_>",
         "<_SKIP>",
         "(",
         "<expressionSequence>",
@@ -706,7 +706,7 @@
     ],
     "<yieldStatement>": [
       [
-        "<Yield_sp_>",
+        "<_Yield_sp_>",
         "<_yieldStatement_re_423>",
         "<eos>"
       ]
@@ -741,7 +741,7 @@
         "<_statementList_PLUS_346>"
       ]
     ],
-    "<Break_sp_>": [
+    "<_Break_sp_>": [
       [
         "<_SKIP>",
         "<Break>"
@@ -756,10 +756,10 @@
       [],
       [],
       [
-        "<EOF_sp_>"
+        "<_EOF_sp_>"
       ],
       [
-        "<SemiColon_sp_>"
+        "<_SemiColon_sp_>"
       ]
     ],
     "<Break>": [
@@ -780,10 +780,10 @@
     ],
     "<_breakStatement_SEQ_414>": [
       [
-        "<Identifier_sp_>"
+        "<_Identifier_sp_>"
       ]
     ],
-    "<Identifier_sp_>": [
+    "<_Identifier_sp_>": [
       [
         "<_SKIP>",
         "<Identifier>"
@@ -1169,7 +1169,7 @@
         "9"
       ]
     ],
-    "<SemiColon_sp_>": [
+    "<_SemiColon_sp_>": [
       [
         "<_SKIP>",
         "<SemiColon>"
@@ -1180,7 +1180,7 @@
         ";"
       ]
     ],
-    "<Class_sp_>": [
+    "<_Class_sp_>": [
       [
         "<_SKIP>",
         "<Class>"
@@ -1224,11 +1224,11 @@
     ],
     "<_classTail_SEQ_455>": [
       [
-        "<Extends_sp_>",
+        "<_Extends_sp_>",
         "<singleExpression>"
       ]
     ],
-    "<Extends_sp_>": [
+    "<_Extends_sp_>": [
       [
         "<_SKIP>",
         "<Extends>"
@@ -1273,23 +1273,23 @@
         "<singleExpression>"
       ],
       [
-        "<Await_sp_>",
+        "<_Await_sp_>",
         "<singleExpression>"
       ],
       [
-        "<Class_sp_>",
+        "<_Class_sp_>",
         "<_singleExpression_re_551>",
         "<classTail>"
       ],
       [
-        "<Delete_sp_>",
+        "<_Delete_sp_>",
         "<singleExpression>"
       ],
       [
-        "<Identifier_sp_>"
+        "<_Identifier_sp_>"
       ],
       [
-        "<Import_sp_>",
+        "<_Import_sp_>",
         "<_SKIP>",
         "(",
         "<singleExpression>",
@@ -1297,28 +1297,28 @@
         ")"
       ],
       [
-        "<New_sp_>",
+        "<_New_sp_>",
         "<_SKIP>",
         ".",
-        "<Identifier_sp_>"
+        "<_Identifier_sp_>"
       ],
       [
-        "<New_sp_>",
+        "<_New_sp_>",
         "<singleExpression>",
         "<_singleExpression_re_557>"
       ],
       [
-        "<Super_sp_>"
+        "<_Super_sp_>"
       ],
       [
-        "<This_sp_>"
+        "<_This_sp_>"
       ],
       [
-        "<Typeof_sp_>",
+        "<_Typeof_sp_>",
         "<singleExpression>"
       ],
       [
-        "<Void_sp_>",
+        "<_Void_sp_>",
         "<singleExpression>"
       ],
       [
@@ -1410,17 +1410,17 @@
       ],
       [
         "<singleExpression>",
-        "<In_sp_>",
+        "<_In_sp_>",
         "<singleExpression>"
       ],
       [
         "<singleExpression>",
-        "<Instanceof_sp_>",
+        "<_Instanceof_sp_>",
         "<singleExpression>"
       ],
       [
         "<singleExpression>",
-        "<TemplateStringLiteral_sp_>"
+        "<_TemplateStringLiteral_sp_>"
       ],
       [
         "<singleExpression>",
@@ -1479,7 +1479,7 @@
         "<_expressionSequence_re_549>"
       ]
     ],
-    "<Await_sp_>": [
+    "<_Await_sp_>": [
       [
         "<_SKIP>",
         "<Await>"
@@ -1490,19 +1490,19 @@
         "<_singleExpression_Q_550>"
       ]
     ],
-    "<Delete_sp_>": [
+    "<_Delete_sp_>": [
       [
         "<_SKIP>",
         "<Delete>"
       ]
     ],
-    "<Import_sp_>": [
+    "<_Import_sp_>": [
       [
         "<_SKIP>",
         "<Import>"
       ]
     ],
-    "<New_sp_>": [
+    "<_New_sp_>": [
       [
         "<_SKIP>",
         "<New>"
@@ -1513,25 +1513,25 @@
         "<_singleExpression_Q_556>"
       ]
     ],
-    "<Super_sp_>": [
+    "<_Super_sp_>": [
       [
         "<_SKIP>",
         "<Super>"
       ]
     ],
-    "<This_sp_>": [
+    "<_This_sp_>": [
       [
         "<_SKIP>",
         "<This>"
       ]
     ],
-    "<Typeof_sp_>": [
+    "<_Typeof_sp_>": [
       [
         "<_SKIP>",
         "<Typeof>"
       ]
     ],
-    "<Void_sp_>": [
+    "<_Void_sp_>": [
       [
         "<_SKIP>",
         "<Void>"
@@ -1540,7 +1540,7 @@
     "<anoymousFunction>": [
       [
         "<_anoymousFunction_re_585>",
-        "<Function_sp_>",
+        "<_Function_sp_>",
         "<_anoymousFunction_re_587>",
         "<_SKIP>",
         "(",
@@ -1571,19 +1571,19 @@
     ],
     "<literal>": [
       [
-        "<BooleanLiteral_sp_>"
+        "<_BooleanLiteral_sp_>"
       ],
       [
-        "<NullLiteral_sp_>"
+        "<_NullLiteral_sp_>"
       ],
       [
-        "<RegularExpressionLiteral_sp_>"
+        "<_RegularExpressionLiteral_sp_>"
       ],
       [
-        "<StringLiteral_sp_>"
+        "<_StringLiteral_sp_>"
       ],
       [
-        "<TemplateStringLiteral_sp_>"
+        "<_TemplateStringLiteral_sp_>"
       ],
       [
         "<bigintLiteral>"
@@ -1602,19 +1602,19 @@
         "}"
       ]
     ],
-    "<In_sp_>": [
+    "<_In_sp_>": [
       [
         "<_SKIP>",
         "<In>"
       ]
     ],
-    "<Instanceof_sp_>": [
+    "<_Instanceof_sp_>": [
       [
         "<_SKIP>",
         "<Instanceof>"
       ]
     ],
-    "<TemplateStringLiteral_sp_>": [
+    "<_TemplateStringLiteral_sp_>": [
       [
         "<_SKIP>",
         "<TemplateStringLiteral>"
@@ -1632,7 +1632,7 @@
     ],
     "<identifierName>": [
       [
-        "<Identifier_sp_>"
+        "<_Identifier_sp_>"
       ],
       [
         "<reservedWord>"
@@ -1754,7 +1754,7 @@
     "<_singleExpression_Q_550>": [
       [],
       [
-        "<Identifier_sp_>"
+        "<_Identifier_sp_>"
       ]
     ],
     "<Delete>": [
@@ -1803,7 +1803,7 @@
         "<_anoymousFunction_Q_584>"
       ]
     ],
-    "<Function_sp_>": [
+    "<_Function_sp_>": [
       [
         "<_SKIP>",
         "<Function>"
@@ -1838,7 +1838,7 @@
         ")"
       ],
       [
-        "<Identifier_sp_>"
+        "<_Identifier_sp_>"
       ]
     ],
     "<arrowFunctionBody>": [
@@ -1856,10 +1856,10 @@
     "<_anoymousFunction_Q_584>": [
       [],
       [
-        "<Async_sp_>"
+        "<_Async_sp_>"
       ]
     ],
-    "<Async_sp_>": [
+    "<_Async_sp_>": [
       [
         "<_SKIP>",
         "<Async>"
@@ -1916,13 +1916,13 @@
     ],
     "<lastFormalParameterArg>": [
       [
-        "<Ellipsis_sp_>",
+        "<_Ellipsis_sp_>",
         "<singleExpression>"
       ]
     ],
     "<assignable>": [
       [
-        "<Identifier_sp_>"
+        "<_Identifier_sp_>"
       ],
       [
         "<arrayLiteral>"
@@ -1991,7 +1991,7 @@
         "<lastFormalParameterArg>"
       ]
     ],
-    "<Ellipsis_sp_>": [
+    "<_Ellipsis_sp_>": [
       [
         "<_SKIP>",
         "<Ellipsis>"
@@ -2016,7 +2016,7 @@
     "<_anoymousFunction_Q_590>": [
       [],
       [
-        "<Async_sp_>"
+        "<_Async_sp_>"
       ]
     ],
     "<_arrowFunctionParameters_re_593>": [
@@ -2105,7 +2105,7 @@
     "<_arrayElement_Q_513>": [
       [],
       [
-        "<Ellipsis_sp_>"
+        "<_Ellipsis_sp_>"
       ]
     ],
     "<_elementList_STAR_506>": [
@@ -2145,25 +2145,25 @@
         "<_elementList_STAR_511>"
       ]
     ],
-    "<BooleanLiteral_sp_>": [
+    "<_BooleanLiteral_sp_>": [
       [
         "<_SKIP>",
         "<BooleanLiteral>"
       ]
     ],
-    "<NullLiteral_sp_>": [
+    "<_NullLiteral_sp_>": [
       [
         "<_SKIP>",
         "<NullLiteral>"
       ]
     ],
-    "<RegularExpressionLiteral_sp_>": [
+    "<_RegularExpressionLiteral_sp_>": [
       [
         "<_SKIP>",
         "<RegularExpressionLiteral>"
       ]
     ],
-    "<StringLiteral_sp_>": [
+    "<_StringLiteral_sp_>": [
       [
         "<_SKIP>",
         "<StringLiteral>"
@@ -2171,33 +2171,33 @@
     ],
     "<bigintLiteral>": [
       [
-        "<BigBinaryIntegerLiteral_sp_>"
+        "<_BigBinaryIntegerLiteral_sp_>"
       ],
       [
-        "<BigDecimalIntegerLiteral_sp_>"
+        "<_BigDecimalIntegerLiteral_sp_>"
       ],
       [
-        "<BigHexIntegerLiteral_sp_>"
+        "<_BigHexIntegerLiteral_sp_>"
       ],
       [
-        "<BigOctalIntegerLiteral_sp_>"
+        "<_BigOctalIntegerLiteral_sp_>"
       ]
     ],
     "<numericLiteral>": [
       [
-        "<BinaryIntegerLiteral_sp_>"
+        "<_BinaryIntegerLiteral_sp_>"
       ],
       [
-        "<DecimalLiteral_sp_>"
+        "<_DecimalLiteral_sp_>"
       ],
       [
-        "<HexIntegerLiteral_sp_>"
+        "<_HexIntegerLiteral_sp_>"
       ],
       [
-        "<OctalIntegerLiteral2_sp_>"
+        "<_OctalIntegerLiteral2_sp_>"
       ],
       [
-        "<OctalIntegerLiteral_sp_>"
+        "<_OctalIntegerLiteral_sp_>"
       ]
     ],
     "<BooleanLiteral>": [
@@ -4412,25 +4412,25 @@
         "~"
       ]
     ],
-    "<BigBinaryIntegerLiteral_sp_>": [
+    "<_BigBinaryIntegerLiteral_sp_>": [
       [
         "<_SKIP>",
         "<BigBinaryIntegerLiteral>"
       ]
     ],
-    "<BigDecimalIntegerLiteral_sp_>": [
+    "<_BigDecimalIntegerLiteral_sp_>": [
       [
         "<_SKIP>",
         "<BigDecimalIntegerLiteral>"
       ]
     ],
-    "<BigHexIntegerLiteral_sp_>": [
+    "<_BigHexIntegerLiteral_sp_>": [
       [
         "<_SKIP>",
         "<BigHexIntegerLiteral>"
       ]
     ],
-    "<BigOctalIntegerLiteral_sp_>": [
+    "<_BigOctalIntegerLiteral_sp_>": [
       [
         "<_SKIP>",
         "<BigOctalIntegerLiteral>"
@@ -4791,31 +4791,31 @@
         "_"
       ]
     ],
-    "<BinaryIntegerLiteral_sp_>": [
+    "<_BinaryIntegerLiteral_sp_>": [
       [
         "<_SKIP>",
         "<BinaryIntegerLiteral>"
       ]
     ],
-    "<DecimalLiteral_sp_>": [
+    "<_DecimalLiteral_sp_>": [
       [
         "<_SKIP>",
         "<DecimalLiteral>"
       ]
     ],
-    "<HexIntegerLiteral_sp_>": [
+    "<_HexIntegerLiteral_sp_>": [
       [
         "<_SKIP>",
         "<HexIntegerLiteral>"
       ]
     ],
-    "<OctalIntegerLiteral2_sp_>": [
+    "<_OctalIntegerLiteral2_sp_>": [
       [
         "<_SKIP>",
         "<OctalIntegerLiteral2>"
       ]
     ],
-    "<OctalIntegerLiteral_sp_>": [
+    "<_OctalIntegerLiteral_sp_>": [
       [
         "<_SKIP>",
         "<OctalIntegerLiteral>"
@@ -5546,7 +5546,7 @@
         "]"
       ],
       [
-        "<StringLiteral_sp_>"
+        "<_StringLiteral_sp_>"
       ],
       [
         "<identifierName>"
@@ -5567,20 +5567,20 @@
     ],
     "<getter>": [
       [
-        "<Identifier_sp_>",
+        "<_Identifier_sp_>",
         "<propertyName>"
       ]
     ],
     "<setter>": [
       [
-        "<Identifier_sp_>",
+        "<_Identifier_sp_>",
         "<propertyName>"
       ]
     ],
     "<_propertyAssignment_Q_524>": [
       [],
       [
-        "<Async_sp_>"
+        "<_Async_sp_>"
       ]
     ],
     "<_propertyAssignment_Q_526>": [
@@ -5599,7 +5599,7 @@
     "<_propertyAssignment_Q_530>": [
       [],
       [
-        "<Ellipsis_sp_>"
+        "<_Ellipsis_sp_>"
       ]
     ],
     "<_objectLiteral_OR_519>": [
@@ -5983,10 +5983,10 @@
     ],
     "<reservedWord>": [
       [
-        "<BooleanLiteral_sp_>"
+        "<_BooleanLiteral_sp_>"
       ],
       [
-        "<NullLiteral_sp_>"
+        "<_NullLiteral_sp_>"
       ],
       [
         "<keyword>"
@@ -5994,325 +5994,325 @@
     ],
     "<keyword>": [
       [
-        "<As_sp_>"
+        "<_As_sp_>"
       ],
       [
-        "<Async_sp_>"
+        "<_Async_sp_>"
       ],
       [
-        "<Await_sp_>"
+        "<_Await_sp_>"
       ],
       [
-        "<Break_sp_>"
+        "<_Break_sp_>"
       ],
       [
-        "<Case_sp_>"
+        "<_Case_sp_>"
       ],
       [
-        "<Catch_sp_>"
+        "<_Catch_sp_>"
       ],
       [
-        "<Class_sp_>"
+        "<_Class_sp_>"
       ],
       [
-        "<Const_sp_>"
+        "<_Const_sp_>"
       ],
       [
-        "<Continue_sp_>"
+        "<_Continue_sp_>"
       ],
       [
-        "<Debugger_sp_>"
+        "<_Debugger_sp_>"
       ],
       [
-        "<Default_sp_>"
+        "<_Default_sp_>"
       ],
       [
-        "<Delete_sp_>"
+        "<_Delete_sp_>"
       ],
       [
-        "<Do_sp_>"
+        "<_Do_sp_>"
       ],
       [
-        "<Else_sp_>"
+        "<_Else_sp_>"
       ],
       [
-        "<Enum_sp_>"
+        "<_Enum_sp_>"
       ],
       [
-        "<Export_sp_>"
+        "<_Export_sp_>"
       ],
       [
-        "<Extends_sp_>"
+        "<_Extends_sp_>"
       ],
       [
-        "<Finally_sp_>"
+        "<_Finally_sp_>"
       ],
       [
-        "<For_sp_>"
+        "<_For_sp_>"
       ],
       [
-        "<From_sp_>"
+        "<_From_sp_>"
       ],
       [
-        "<Function_sp_>"
+        "<_Function_sp_>"
       ],
       [
-        "<If_sp_>"
+        "<_If_sp_>"
       ],
       [
-        "<Implements_sp_>"
+        "<_Implements_sp_>"
       ],
       [
-        "<Import_sp_>"
+        "<_Import_sp_>"
       ],
       [
-        "<In_sp_>"
+        "<_In_sp_>"
       ],
       [
-        "<Instanceof_sp_>"
+        "<_Instanceof_sp_>"
       ],
       [
-        "<Interface_sp_>"
+        "<_Interface_sp_>"
       ],
       [
-        "<Let_sp_>"
+        "<_Let_sp_>"
       ],
       [
-        "<New_sp_>"
+        "<_New_sp_>"
       ],
       [
-        "<Package_sp_>"
+        "<_Package_sp_>"
       ],
       [
-        "<Private_sp_>"
+        "<_Private_sp_>"
       ],
       [
-        "<Protected_sp_>"
+        "<_Protected_sp_>"
       ],
       [
-        "<Public_sp_>"
+        "<_Public_sp_>"
       ],
       [
-        "<Return_sp_>"
+        "<_Return_sp_>"
       ],
       [
-        "<Static_sp_>"
+        "<_Static_sp_>"
       ],
       [
-        "<Super_sp_>"
+        "<_Super_sp_>"
       ],
       [
-        "<Switch_sp_>"
+        "<_Switch_sp_>"
       ],
       [
-        "<This_sp_>"
+        "<_This_sp_>"
       ],
       [
-        "<Throw_sp_>"
+        "<_Throw_sp_>"
       ],
       [
-        "<Try_sp_>"
+        "<_Try_sp_>"
       ],
       [
-        "<Typeof_sp_>"
+        "<_Typeof_sp_>"
       ],
       [
-        "<Var_sp_>"
+        "<_Var_sp_>"
       ],
       [
-        "<Void_sp_>"
+        "<_Void_sp_>"
       ],
       [
-        "<While_sp_>"
+        "<_While_sp_>"
       ],
       [
-        "<With_sp_>"
+        "<_With_sp_>"
       ],
       [
-        "<Yield_sp_>"
+        "<_Yield_sp_>"
       ]
     ],
-    "<As_sp_>": [
+    "<_As_sp_>": [
       [
         "<_SKIP>",
         "<As>"
       ]
     ],
-    "<Case_sp_>": [
+    "<_Case_sp_>": [
       [
         "<_SKIP>",
         "<Case>"
       ]
     ],
-    "<Catch_sp_>": [
+    "<_Catch_sp_>": [
       [
         "<_SKIP>",
         "<Catch>"
       ]
     ],
-    "<Const_sp_>": [
+    "<_Const_sp_>": [
       [
         "<_SKIP>",
         "<Const>"
       ]
     ],
-    "<Continue_sp_>": [
+    "<_Continue_sp_>": [
       [
         "<_SKIP>",
         "<Continue>"
       ]
     ],
-    "<Debugger_sp_>": [
+    "<_Debugger_sp_>": [
       [
         "<_SKIP>",
         "<Debugger>"
       ]
     ],
-    "<Default_sp_>": [
+    "<_Default_sp_>": [
       [
         "<_SKIP>",
         "<Default>"
       ]
     ],
-    "<Do_sp_>": [
+    "<_Do_sp_>": [
       [
         "<_SKIP>",
         "<Do>"
       ]
     ],
-    "<Else_sp_>": [
+    "<_Else_sp_>": [
       [
         "<_SKIP>",
         "<Else>"
       ]
     ],
-    "<Enum_sp_>": [
+    "<_Enum_sp_>": [
       [
         "<_SKIP>",
         "<Enum>"
       ]
     ],
-    "<Export_sp_>": [
+    "<_Export_sp_>": [
       [
         "<_SKIP>",
         "<Export>"
       ]
     ],
-    "<Finally_sp_>": [
+    "<_Finally_sp_>": [
       [
         "<_SKIP>",
         "<Finally>"
       ]
     ],
-    "<For_sp_>": [
+    "<_For_sp_>": [
       [
         "<_SKIP>",
         "<For>"
       ]
     ],
-    "<From_sp_>": [
+    "<_From_sp_>": [
       [
         "<_SKIP>",
         "<From>"
       ]
     ],
-    "<If_sp_>": [
+    "<_If_sp_>": [
       [
         "<_SKIP>",
         "<If>"
       ]
     ],
-    "<Implements_sp_>": [
+    "<_Implements_sp_>": [
       [
         "<_SKIP>",
         "<Implements>"
       ]
     ],
-    "<Interface_sp_>": [
+    "<_Interface_sp_>": [
       [
         "<_SKIP>",
         "<Interface>"
       ]
     ],
-    "<Let_sp_>": [
+    "<_Let_sp_>": [
       [
         "<_SKIP>",
         "<Let>"
       ]
     ],
-    "<Package_sp_>": [
+    "<_Package_sp_>": [
       [
         "<_SKIP>",
         "<Package>"
       ]
     ],
-    "<Private_sp_>": [
+    "<_Private_sp_>": [
       [
         "<_SKIP>",
         "<Private>"
       ]
     ],
-    "<Protected_sp_>": [
+    "<_Protected_sp_>": [
       [
         "<_SKIP>",
         "<Protected>"
       ]
     ],
-    "<Public_sp_>": [
+    "<_Public_sp_>": [
       [
         "<_SKIP>",
         "<Public>"
       ]
     ],
-    "<Return_sp_>": [
+    "<_Return_sp_>": [
       [
         "<_SKIP>",
         "<Return>"
       ]
     ],
-    "<Static_sp_>": [
+    "<_Static_sp_>": [
       [
         "<_SKIP>",
         "<Static>"
       ]
     ],
-    "<Switch_sp_>": [
+    "<_Switch_sp_>": [
       [
         "<_SKIP>",
         "<Switch>"
       ]
     ],
-    "<Throw_sp_>": [
+    "<_Throw_sp_>": [
       [
         "<_SKIP>",
         "<Throw>"
       ]
     ],
-    "<Try_sp_>": [
+    "<_Try_sp_>": [
       [
         "<_SKIP>",
         "<Try>"
       ]
     ],
-    "<Var_sp_>": [
+    "<_Var_sp_>": [
       [
         "<_SKIP>",
         "<Var>"
       ]
     ],
-    "<While_sp_>": [
+    "<_While_sp_>": [
       [
         "<_SKIP>",
         "<While>"
       ]
     ],
-    "<With_sp_>": [
+    "<_With_sp_>": [
       [
         "<_SKIP>",
         "<With>"
       ]
     ],
-    "<Yield_sp_>": [
+    "<_Yield_sp_>": [
       [
         "<_SKIP>",
         "<Yield>"
@@ -6683,7 +6683,7 @@
     "<_argument_Q_540>": [
       [],
       [
-        "<Ellipsis_sp_>"
+        "<_Ellipsis_sp_>"
       ]
     ],
     "<_argument_OR_542>": [
@@ -6701,7 +6701,7 @@
     ],
     "<_argument_SEQ_544>": [
       [
-        "<Identifier_sp_>"
+        "<_Identifier_sp_>"
       ]
     ],
     "<_arguments_OR_536>": [
@@ -6815,17 +6815,17 @@
     ],
     "<_classElement_SEQ_461>": [
       [
-        "<Static_sp_>"
+        "<_Static_sp_>"
       ]
     ],
     "<_classElement_SEQ_462>": [
       [
-        "<Identifier_sp_>"
+        "<_Identifier_sp_>"
       ]
     ],
     "<_classElement_SEQ_463>": [
       [
-        "<Async_sp_>"
+        "<_Async_sp_>"
       ]
     ],
     "<_methodDefinition_re_468>": [
@@ -6947,7 +6947,7 @@
     ],
     "<_continueStatement_SEQ_410>": [
       [
-        "<Identifier_sp_>"
+        "<_Identifier_sp_>"
       ]
     ],
     "<_exportStatement_re_374>": [
@@ -6994,8 +6994,8 @@
     ],
     "<importFrom>": [
       [
-        "<From_sp_>",
-        "<StringLiteral_sp_>"
+        "<_From_sp_>",
+        "<_StringLiteral_sp_>"
       ]
     ],
     "<moduleItems>": [
@@ -7031,7 +7031,7 @@
     ],
     "<_importNamespace_SEQ_365>": [
       [
-        "<As_sp_>",
+        "<_As_sp_>",
         "<identifierName>"
       ]
     ],
@@ -7088,7 +7088,7 @@
     ],
     "<_aliasName_SEQ_369>": [
       [
-        "<As_sp_>",
+        "<_As_sp_>",
         "<identifierName>"
       ]
     ],
@@ -7151,7 +7151,7 @@
     "<_functionDeclaration_Q_447>": [
       [],
       [
-        "<Async_sp_>"
+        "<_Async_sp_>"
       ]
     ],
     "<_functionDeclaration_Q_449>": [
@@ -7185,13 +7185,13 @@
     ],
     "<_ifStatement_SEQ_387>": [
       [
-        "<Else_sp_>",
+        "<_Else_sp_>",
         "<statement>"
       ]
     ],
     "<importFromBlock>": [
       [
-        "<StringLiteral_sp_>",
+        "<_StringLiteral_sp_>",
         "<eos>"
       ],
       [
@@ -7329,7 +7329,7 @@
     "<_iterationStatement_Q_402>": [
       [],
       [
-        "<Await_sp_>"
+        "<_Await_sp_>"
       ]
     ],
     "<_iterationStatement_OR_404>": [
@@ -7418,7 +7418,7 @@
     ],
     "<caseClause>": [
       [
-        "<Case_sp_>",
+        "<_Case_sp_>",
         "<expressionSequence>",
         "<_SKIP>",
         ":",
@@ -7455,7 +7455,7 @@
     ],
     "<defaultClause>": [
       [
-        "<Default_sp_>",
+        "<_Default_sp_>",
         "<_SKIP>",
         ":",
         "<_defaultClause_re_436>"
@@ -7504,7 +7504,7 @@
     ],
     "<catchProduction>": [
       [
-        "<Catch_sp_>",
+        "<_Catch_sp_>",
         "<_catchProduction_re_446>",
         "<block>"
       ]
@@ -7548,19 +7548,19 @@
     ],
     "<finallyProduction>": [
       [
-        "<Finally_sp_>",
+        "<_Finally_sp_>",
         "<block>"
       ]
     ],
     "<varModifier>": [
       [
-        "<Const_sp_>"
+        "<_Const_sp_>"
       ],
       [
-        "<Let_sp_>"
+        "<_Let_sp_>"
       ],
       [
-        "<Var_sp_>"
+        "<_Var_sp_>"
       ]
     ],
     "<variableDeclarationList>": [
