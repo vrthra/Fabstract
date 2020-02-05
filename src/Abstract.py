@@ -623,6 +623,7 @@ class LimitFuzzer(LimitFuzzer):
 # ### Optimization for tokens
 
 def reduction(tree, grammar, predicate):
+    global KEY
     first_tuple = (tree, [])
     p_q = []
     add_to_pq(first_tuple, p_q)
@@ -637,6 +638,7 @@ def reduction(tree, grammar, predicate):
         _n, _m, _ec, (dtree, F_path) = heapq.heappop(p_q)
         stree = get_child(dtree, F_path)
         skey, schildren = stree
+        KEY = 'reduction:%s' % skey
         found = False
         # we now want to replace stree with alternate nodes.
         for i, node in compatible_nodes(stree, grammar):
