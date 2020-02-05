@@ -426,6 +426,15 @@ def check(tval, dtree, grammar, predicate, unverified, max_checks):
     key, children, *rest = node
     if not children: return []
     if not is_nt(key): return []
+
+    if key == '<_SKIP>':
+        if status == St.unchecked:
+            print('abstract: unverified', node[0])
+            return [(path, St.unverified)]
+        else:
+            print('abstract: verified', node[0])
+            return [(path, St.verified)]
+
     checks = 0
     limit = 0
     abstract = True

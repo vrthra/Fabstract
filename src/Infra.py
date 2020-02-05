@@ -41,5 +41,5 @@ def main(gf_fbjson, bug_fn, pred, results_dir='results', max_checks=A.MAX_CHECKS
     print("min:", repr(min_s))
     print("abs:", repr(abs_s))
 
-    with open('./%s/%s.json' % (results_dir, A.name), 'w+') as f:
+    with open('./%s/%s.json' % (results_dir, A.NAME), 'w+') as f:
         print(json.dumps({'min_s': min_s, 'abs_s': abs_s, 'abs_t': a_mintree}, indent=4), file=f)
