@@ -89,12 +89,18 @@ def main(gf_fbjson, bug_fn, pred, results_dir='fuzzing', max_checks=A.MAX_CHECKS
         abs_s = j['abs_s']
         abs_t = j['abs_t']
 
-    results = fuzz_tree(meta, abs_t)
+    fuzz_vals = fuzz_tree(meta, abs_t)
     FUZZ_LIMIT = 100
-    if len(results) > FUZZ_LIMIT:
-        results = random.sample(results, FUZZ_LIMIT)
-    print(len(results))
-    for r in results:
-        print(repr(r))
-        I._predicate(r)
+    if len(fuzz_vals) > FUZZ_LIMIT:
+        fuzz_vals = random.sample(fuzz_vals, FUZZ_LIMIT)
+    print(len(fuzz_vals))
+    results = []
+    for f in fuzz_vals:
+        r = I._predicate(f)
+        print(r, repr(f))
+        results.append(r)
+
+    print('Total:', len(results))
+    print('Valid:', len([r for r in  results if r != A.PRes.invalid]))
+    print('Success:', len([r for r in  results if r == A.PRes.success]))
 
