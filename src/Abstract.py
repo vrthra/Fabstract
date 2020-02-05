@@ -13,7 +13,7 @@ import re, copy
 from enum import Enum
 import sys
 sys.setrecursionlimit(9000)
-LOG = False
+LOG = True
 KEY = '()'
 NAME = None
 # Here is our failing test:
@@ -80,11 +80,6 @@ def general_str(tree):
         x = general_str(c)
         res.append(x)
     return ''.join(res)
-
-def limit_depth(t, d, n, s):
-    if d == 0:
-        return n
-    return s
 
 # ### `nt_group` groups the existing nodes in the tree in a dictionary
 
@@ -247,44 +242,6 @@ def e_g(general_a):
     general = True if not general_a else general_a[0]
     return general
 
-
-def extract_node(node, id):
-    symbol, children, *general_ = node
-    general = e_g(general_)
-
-    if general:
-        return symbol, [], ''
-    if is_nt(symbol):
-        return '<%s*>'% symbol[1:-1], children, ''
-    else:
-        return symbol, children, ''
-
-
-COUNT = 0
-def my_pred(v):
-    global COUNT
-    COUNT += 1
-    return test_bb(v)
-
-
-# We now need a way to mark all the faulty nodes in a tree separately.
-
-def mark_faulty_name(symbol, prefix, v):
-    return '<%s_%s_f%s>'% (symbol[1:-1], prefix, v)
-
-
-def limit_gen_s(t, d, n, s):
-    name, children, *generalize_ = t
-    if not children: return s
-    v = tree_to_string(t)
-    if not is_nt(name): return v
-    if is_token(name): return v
-    if not len(v.strip()): return v
-    generalize = e_g(generalize_)
-    if generalize:
-        return name
-    return s
-
 # #### Replacing an array of nodes
 #
 # Next, we need the ability to replace a list of nodes together with random values.
@@ -383,19 +340,6 @@ def markup_paths(tkey, paths, gtree):
         assert name == cname
         gtree = replace_path2(gtree, p, (newname, children, True)) # now it is generalizable!
     return gtree
-
-
-# We can now finally define `generalize_multi_fault_tree()`. The idea is to only check the nodes that are marked as generalizable. If we find that such a node is marked correctly, we do not have to recurse to the children. However, if the mark was incorrect (or not marked as such), then we recurse.
-
-def generalize_tree(grammar, predicate, otree, max_checks=100):
-    if LOG:
-        cn = count_nodes(otree)
-        cl = count_leaves(otree)
-        print('num nodes:', cn, 'num_leaves:', cl, flush=True)
-    generalized_tree = generalize_tree_t2b(grammar, predicate, otree, max_checks)
-    # now we need to find if any of the concrete tokens are similar. If they are
-    # similar we need to try fuzzing them together.
-    return generalized_tree
 
 def identify_similarities(grammar, predicate, generalized_tree, max_checks=100):
     cpaths = identify_concrete_paths_to_nt(generalized_tree)
@@ -546,7 +490,6 @@ def get_abstraction(grammar_, my_input, predicate, max_checks=100):
 
     dd_tree_ =  abstraction(min_tree, grammar, predicate, max_checks)
     dd_tree = identify_similarities(grammar, predicate, dd_tree_, max_checks)
-    #s = tree_to_string(dd_tree, wrap=limit_gen_s)
     s = general_str(dd_tree)
     return min_s, s, dd_tree
 
