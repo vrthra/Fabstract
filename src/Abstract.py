@@ -459,14 +459,14 @@ def check(tval, dtree, grammar, predicate, unverified, max_checks):
                 continue
     if abstract:
         if status == St.unchecked:
-            print(node[0], 'abstract: unverified')
+            print('abstract: unverified', node[0])
             return [(path, St.unverified)]
         else:
-            print(node[0], 'abstract: verified')
+            print('abstract: verified', node[0])
             return [(path, St.verified)]
     else:
         if status == St.unverified:
-            print(KEY, 'not abstract.')
+            print('NOT ABSTRACT:', KEY)
             print(repr(rstr))
 
         if is_token(key): return []

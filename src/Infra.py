@@ -13,17 +13,23 @@ def _predicate(src):
     return res
 
 
-def main(gf_fbjson, bug_fn, pred, max_checks=A.MAX_CHECKS):
-    name = os.path.basename(bug_fn)
-    global LOG_NAME, MY_PREDICATE
-    A.LOG = True
-    os.system('mkdir -p results')
-    LOG_NAME = "./results/%s.log.json" % name
-    A.NAME = name
+def load_grammar(gf_fbjson, bug_fn, pred):
+    global MY_PREDICATE
     MY_PREDICATE = pred
-    os.system('rm -f %s' % LOG_NAME)
     grammar_fn = gf_fbjson
     meta, tree = A.load_parsed_bug(bug_fn, grammar_fn)
+    name = os.path.basename(bug_fn)
+
+    return meta, tree, name
+
+
+def main(gf_fbjson, bug_fn, pred, results_dir='results', max_checks=A.MAX_CHECKS):
+    meta, tree, name = load_grammar(gf_fbjson, bug_fn, pred)
+    global LOG_NAME, MY_PREDICATE
+    os.system('mkdir -p %s' % results_dir)
+    LOG_NAME = "./%s/%s.log.json" % (results_dir, name)
+    A.NAME = name
+    os.system('rm -f %s' % LOG_NAME)
 
     assert _predicate(A.tree_to_string(tree)) == A.PRes.success
     assert _predicate('') == A.PRes.failed
@@ -35,5 +41,5 @@ def main(gf_fbjson, bug_fn, pred, max_checks=A.MAX_CHECKS):
     print("min:", repr(min_s))
     print("abs:", repr(abs_s))
 
-    with open('./results/%s.json' % name, 'w+') as f:
+    with open('./%s/%s.json' % (results_dir, A.name), 'w+') as f:
         print(json.dumps({'min_s': min_s, 'abs_s': abs_s, 'abs_t': a_mintree}, indent=4), file=f)
