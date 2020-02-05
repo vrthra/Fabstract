@@ -1,5 +1,6 @@
 USE_NT_NAME = True
 TIMEOUT=5
+LOOK_DEEPER_IN_ISOLATED = False
 
 # The idea here is either try MAX_LIMIT number of tries
 # for a counter example, or give up after `MAX_CHECKS`
@@ -424,7 +425,10 @@ def check(tval, dtree, grammar, predicate, unverified, max_checks):
 
         if is_token(key): return []
         paths = []
-        if status == St.unchecked:
+        # what should we do when an unverified node is found not abstract?
+        # do we look at the child nodes? It can be costly, because now we
+        # are also dealing with random values in other nodes marked general.
+        if status == St.unchecked or LOOK_DEEPER_IN_ISOLATED:
             for i,child in enumerate(children):
                 if not is_nt(child[0]): continue
                 tval = (path + [i], St.unchecked)
