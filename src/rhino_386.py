@@ -2,8 +2,7 @@ import Infra as I
 from Abstract import PRes
 
 def my_predicate(src):
-    o = I.do('rhino', 'java -jar lang/js/compilers/rhino-1.7.7.2.jar')
-    o = I.do('lua', './lang/lua/compilers/lua --', src)
+    o = I.do('rhino', 'java -jar lang/js/compilers/rhino-1.7.7.2.jar', src)
     if o.returncode == 0: return PRes.failed
     if o.returncode == -11: return PRes.success
     out = o.stdout
