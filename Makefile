@@ -45,18 +45,18 @@ fuzz_closure_results_src=$(addsuffix .log,$(addprefix results/fuzz_closure_,$(cl
 fuzz_clojure_results_src=$(addsuffix .log,$(addprefix results/fuzz_clojure_,$(clojure_bugs)))
 
 all_lua: fuzz_lua
-	tar -cf lua.tar fuzz.*.log reduce.*.log results fuzzing .db
+	tar -cf lua.tar results fuzzing .db
 	@echo lua done
 
 all_rhino: fuzz_rhino
-	tar -cf rhino.tar fuzz.*.log reduce.*.log results fuzzing .db
+	tar -cf rhino.tar results fuzzing .db
 	@echo rhino done
 
 all_clojure: fuzz_clojure
-	tar -cf clojure.tar fuzz.*.log reduce.*.log results fuzzing .db
+	tar -cf clojure.tar results fuzzing .db
 	@echo clojure done
 
 all_closure: fuzz_closure
-	tar -cf closure.tar fuzz.*.log reduce.*.log results fuzzing .db
+	tar -cf closure.tar results fuzzing .db
 	@echo closure done
 
