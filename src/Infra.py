@@ -8,13 +8,16 @@ LOG_NAME = None
 MY_PREDICATE = None
 SAVE_EXEC = False
 
-def do(prefix, cmd, src):
+def do(prefix, cmd, src, as_string=False):
     o = None
-    with tempfile.NamedTemporaryFile(prefix=prefix) as tmp:
-        tname = tmp.name
-        tmp.write(src.encode('UTF-8'))
-        tmp.flush()
-        o = A.do(cmd.split(' ') + [tname])
+    if as_string:
+        o = A.do(cmd.split(' ') + [src])
+    else:
+        with tempfile.NamedTemporaryFile(prefix=prefix) as tmp:
+            tname = tmp.name
+            tmp.write(src.encode('UTF-8'))
+            tmp.flush()
+            o = A.do(cmd.split(' ') + [tname])
     hname = hashlib.sha1(src.encode('UTF-8')).hexdigest()
     if SAVE_EXEC:
         with open('.db/exec.%s' % hname, 'w+') as f:
@@ -66,7 +69,7 @@ def main(gf_fbjson, bug_fn, pred, results_dir='results', max_checks=A.MAX_CHECKS
     try_load(name)
 
     assert _predicate(A.tree_to_string(tree)) == A.PRes.success
-    assert _predicate('') == A.PRes.failed
+    assert _predicate('find --help') == A.PRes.failed
 
     min_s, abs_s, a_mintree = A.get_abstraction(meta,
                                A.tree_to_string(tree),
