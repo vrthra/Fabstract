@@ -30,7 +30,7 @@ def _predicate(src):
     res = MY_PREDICATE(src)
     g_predicate[src] = res.value
     with open(LOG_NAME, 'a+') as f:
-        print(json.dumps({'key':A.KEY, 'src':src, 'res': str(res)}), file=f)
+        print(json.dumps({'res': str(res), 'key':A.KEY, 'src':src}), file=f)
     return res
 
 
