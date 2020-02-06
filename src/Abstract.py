@@ -364,7 +364,7 @@ def check(tval, dtree, grammar, predicate, unverified, max_checks):
     global check_counter, KEY
     path, status = tval
     node = get_child(dtree, path)
-    KEY = "%s:(%s)" % (node[0], tree_to_string(node))
+    KEY = "%s:(%s) %s" % (node[0], tree_to_string(node), status)
     if LOG:
         print(check_counter, 'check:', node[0], status)
         check_counter += 1
