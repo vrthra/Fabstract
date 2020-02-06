@@ -3,7 +3,9 @@ clobber: clean; rm -rf .db
 results:; mkdir -p results
 
 closure_bugs=2808 2842 2937 3178 3379 1978
-clojure_bugs=2808 2842 2937 3178 3379 1978
+clojure_bugs=2092 2345 2450 2473 2518 2521
+
+
 lua_bugs=5_3_5__4
 rhino_bugs=385 386
 
