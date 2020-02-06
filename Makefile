@@ -14,7 +14,13 @@ rhino_results_src=$(addsuffix .log,$(addprefix results/reduce_rhino_,$(rhino_bug
 clojure_results_src=$(addsuffix .log,$(addprefix results/reduce_clojure_,$(clojure_bugs)))
 closure_results_src=$(addsuffix .log,$(addprefix results/reduce_closure_,$(closure_bugs)))
 
-results/reduce_%.log: src/%.py results
+fuzz_lua_results_src=$(addsuffix .log,$(addprefix results/fuzz_lua_,$(lua_bugs)))
+fuzz_rhino_results_src=$(addsuffix .log,$(addprefix results/fuzz_rhino_,$(rhino_bugs)))
+fuzz_closure_results_src=$(addsuffix .log,$(addprefix results/fuzz_closure_,$(closure_bugs)))
+fuzz_clojure_results_src=$(addsuffix .log,$(addprefix results/fuzz_clojure_,$(clojure_bugs)))
+
+
+results/reduce_%.log: src/%.py | results
 	echo 1 $@; echo 2 $<; echo 3 $*; echo 4 $^
 	time python $< 2>&1 | unbuffer -p tee $@_
 	mv $@_ $@
@@ -30,19 +36,12 @@ reduce_clojure: $(clojure_results_src); @echo done
 reduce_closure: $(closure_results_src); @echo done
 
 
-fuzz_lua:
-	make $(fuzz_lua_results_src)
-fuzz_rhino:
-	make $(fuzz_rhino_results_src)
-fuzz_clojure:
-	make $(fuzz_clojure_results_src)
-fuzz_closure:
-	make $(fuzz_closure_results_src)
+fuzz_lua: $(fuzz_lua_results_src); @echo done
 
-fuzz_lua_results_src=$(addsuffix .log,$(addprefix results/fuzz_lua_,$(lua_bugs)))
-fuzz_rhino_results_src=$(addsuffix .log,$(addprefix results/fuzz_rhino_,$(rhino_bugs)))
-fuzz_closure_results_src=$(addsuffix .log,$(addprefix results/fuzz_closure_,$(closure_bugs)))
-fuzz_clojure_results_src=$(addsuffix .log,$(addprefix results/fuzz_clojure_,$(clojure_bugs)))
+fuzz_rhino: $(fuzz_rhino_results_src); @echo done
+fuzz_clojure: $(fuzz_clojure_results_src); @echo done
+fuzz_closure: $(fuzz_closure_results_src); @echo done
+
 
 all_lua: fuzz_lua
 	tar -cf lua.tar results .db
