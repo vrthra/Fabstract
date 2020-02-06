@@ -4,6 +4,13 @@ clean:
 clobber: clean
 	rm -rf .db
 
+reduce_closure:
+	(time python src/closure_2808.py; \
+	time python src/closure_2842.py; \
+	time python src/closure_2937.py; \
+	time python src/closure_3178.py; \
+	time python src/closure_3379.py; \
+	time python src/closure_1978.py ) 2>&1 | unbuffer -p tee reduce.closure.log
 
 reduce_clojure:
 	(time python src/clojure_2092.py; \
@@ -20,6 +27,13 @@ reduce_rhino:
 reduce_lua:
 	time python src/lua_5_3_5__4.py 2>&1 | unbuffer -p tee reduce.lua.log
 
+fuzz_closure:
+	(time python src/fuzz_closure_2808.py; \
+	time python src/fuzz_closure_2842.py; \
+	time python src/fuzz_closure_2937.py; \
+	time python src/fuzz_closure_3178.py; \
+	time python src/fuzz_closure_3379.py; \
+	time python src/fuzz_closure_1978.py ) 2>&1 | unbuffer -p tee fuzz.closure.log
 
 fuzz_clojure:
 	(time python src/fuzz_clojure_2092.py; \
@@ -47,4 +61,8 @@ all_rhino: reduce_rhino fuzz_rhino
 all_clojure: reduce_clojure fuzz_clojure
 	tar -cf clojure.tar fuzz.*.log reduce.*.log results fuzzing .db
 	@echo clojure done
+
+all_closure: reduce_closure fuzz_closure
+	tar -cf closure.tar fuzz.*.log reduce.*.log results fuzzing .db
+	@echo closure done
 
