@@ -1,6 +1,6 @@
 USE_NT_NAME = True
 TIMEOUT=5
-LOOK_DEEPER_IN_ISOLATED = False
+LOOK_DEEPER_IN_ISOLATED = True
 
 # The idea here is either try MAX_LIMIT number of tries
 # for a counter example, or give up after `MAX_CHECKS`
@@ -18,10 +18,10 @@ LOG = True
 KEY = '()'
 NAME = None
 # Here is our failing test:
-class PRes(Enum):
-    success = 1
-    failed = 0
-    invalid = -1
+class PRes(str, Enum):
+    success = 'SUCCESS'
+    failed = 'FAILED'
+    invalid = 'INVALID'
 
 class St(Enum):
     unchecked = 1
@@ -622,6 +622,8 @@ import tempfile
 import subprocess
 import os
 import signal
+import urllib
+import hashlib
 
 class O:
     def __init__(self, **keys): self.__dict__.update(keys)
@@ -634,11 +636,11 @@ def do(command, env=None, shell=False, log=False, **args):
     )
     try: 
         stdout, stderr = result.communicate(timeout=TIMEOUT)
-        if log:
-            with open('_do.log', 'a+') as f:
-                print(json.dumps({'cmd':command, 'env':env, 'exitcode':result.returncode}), env, file=f)
         result.kill()
+        stderr = '' if stderr is None else stderr.decode('utf-8', 'ignore')
+        stdout = '' if stdout is None else stdout.decode('utf-8', 'ignore')
         return O(returncode=result.returncode, stdout=stdout, stderr=stderr)
     except subprocess.TimeoutExpired as e:
         result.kill()
-        return O(returncode=255, stdout=b'TIMEOUT', stderr=b'')
+        return O(returncode=255, stdout='TIMEOUT', stderr='')
+
