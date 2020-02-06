@@ -1,68 +1,60 @@
-clean:
-	rm -rf log fuzz.log results fuzzing
+clean: ; rm -rf log fuzz.log results fuzzing
+clobber: clean; rm -rf .db
+results:; mkdir -p results
 
-clobber: clean
-	rm -rf .db
+closure_bugs=2808 2842 2937 3178 3379 1978
+clojure_bugs=2808 2842 2937 3178 3379 1978
+lua_bugs=5_3_5__4
+rhino_bugs=385 386
 
-reduce_closure:
-	(time python src/closure_2808.py; \
-	time python src/closure_2842.py; \
-	time python src/closure_2937.py; \
-	time python src/closure_3178.py; \
-	time python src/closure_3379.py; \
-	time python src/closure_1978.py ) 2>&1 | unbuffer -p tee reduce.closure.log
+lua_results_src=$(addsuffix .log,$(addprefix results/reduce_lua_,$(lua_bugs)))
+rhino_results_src=$(addsuffix .log,$(addprefix results/reduce_rhino_,$(rhino_bugs)))
+clojure_results_src=$(addsuffix .log,$(addprefix results/reduce_clojure_,$(clojure_bugs)))
+closure_results_src=$(addsuffix .log,$(addprefix results/reduce_closure_,$(closure_bugs)))
 
-reduce_clojure:
-	(time python src/clojure_2092.py; \
-	time python src/clojure_2345.py; \
-	time python src/clojure_2450.py; \
-	time python src/clojure_2473.py; \
-	time python src/clojure_2518.py; \
-	time python src/clojure_2521.py ) 2>&1 | unbuffer -p tee reduce.clojure.log
+results/reduce_%.log: src/%.py results
+	echo 1 $@; echo 2 $<; echo 3 $*; echo 4 $^
+	time python $< 2>&1 | unbuffer -p tee $@_
+	mv $@_ $@
 
-reduce_rhino:
-	(time python3 src/rhino_385.py; \
-	time python3 src/rhino_386.py ) 2>&1 | unbuffer -p tee reduce.rhino.log
+results/fuzz_%.log: src/%.py results/reduce_%.log
+	echo 1 $@; echo 2 $<; echo 3 $*; echo 4 $^
+	time python $< 2>&1 | unbuffer -p tee $@_
+	mv $@_ $@
 
-reduce_lua:
-	time python src/lua_5_3_5__4.py 2>&1 | unbuffer -p tee reduce.lua.log
+reduce_lua: $(lua_results_src); @echo done
+reduce_rhino: $(rhino_results_src); @echo done
+reduce_clojure: $(clojure_results_src); @echo done
+reduce_closure: $(closure_results_src); @echo done
 
-fuzz_closure:
-	(time python src/fuzz_closure_2808.py; \
-	time python src/fuzz_closure_2842.py; \
-	time python src/fuzz_closure_2937.py; \
-	time python src/fuzz_closure_3178.py; \
-	time python src/fuzz_closure_3379.py; \
-	time python src/fuzz_closure_1978.py ) 2>&1 | unbuffer -p tee fuzz.closure.log
-
-fuzz_clojure:
-	(time python src/fuzz_clojure_2092.py; \
-	time python src/fuzz_clojure_2345.py; \
-	time python src/fuzz_clojure_2450.py; \
-	time python src/fuzz_clojure_2473.py; \
-	time python src/fuzz_clojure_2518.py; \
-	time python src/fuzz_clojure_2521.py  ) 2>&1 |  unbuffer -p tee fuzz.clojure.log
-
-fuzz_rhino:
-	(time python3 src/fuzz_rhino_385.py; \
-	time python3 src/fuzz_rhino_386.py ) 2>&1 |  unbuffer -p tee fuzz.rhino.log
 
 fuzz_lua:
-	time python src/fuzz_lua_5_3_5__4.py |  unbuffer -p tee fuzz.lua.log
+	make $(fuzz_lua_results_src)
+fuzz_rhino:
+	make $(fuzz_rhino_results_src)
+fuzz_clojure:
+	make $(fuzz_clojure_results_src)
+fuzz_closure:
+	make $(fuzz_closure_results_src)
 
-all_lua: reduce_lua fuzz_lua
+fuzz_lua_results_src=$(addsuffix .log,$(addprefix results/fuzz_lua_,$(lua_bugs)))
+fuzz_rhino_results_src=$(addsuffix .log,$(addprefix results/fuzz_rhino_,$(rhino_bugs)))
+fuzz_closure_results_src=$(addsuffix .log,$(addprefix results/fuzz_closure_,$(closure_bugs)))
+fuzz_clojure_results_src=$(addsuffix .log,$(addprefix results/fuzz_clojure_,$(clojure_bugs)))
+
+all_lua: fuzz_lua
 	tar -cf lua.tar fuzz.*.log reduce.*.log results fuzzing .db
 	@echo lua done
 
-all_rhino: reduce_rhino fuzz_rhino
+all_rhino: fuzz_rhino
 	tar -cf rhino.tar fuzz.*.log reduce.*.log results fuzzing .db
 	@echo rhino done
 
-all_clojure: reduce_clojure fuzz_clojure
+all_clojure: fuzz_clojure
 	tar -cf clojure.tar fuzz.*.log reduce.*.log results fuzzing .db
 	@echo clojure done
 
-all_closure: reduce_closure fuzz_closure
+all_closure: fuzz_closure
 	tar -cf closure.tar fuzz.*.log reduce.*.log results fuzzing .db
 	@echo closure done
 
