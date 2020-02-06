@@ -360,28 +360,7 @@ def generate(dtree, grammar, paths):
     res = replace_arr_with_random_values([p[0] for p in paths], grammar, dtree)
     return tree_to_string(res)
 
-check_counter = 0
-def check(tval, dtree, grammar, predicate, unverified, max_checks):
-    global check_counter, KEY
-    path, status = tval
-    node = get_child(dtree, path)
-    KEY = "%s:(%s) %s" % (node[0], tree_to_string(node), status)
-    if LOG:
-        print(check_counter, 'check:', node[0], status)
-        check_counter += 1
-    key, children, *rest = node
-    if not children: return []
-    if not is_nt(key): return []
-
-    if key == '<_SKIP>':
-        if SKIP_IS_CONCRETE: return []
-        if status == St.unchecked:
-            print('abstract: unverified', node[0])
-            return [(path, St.unverified)]
-        else:
-            print('abstract: verified', node[0])
-            return [(path, St.verified)]
-
+def can_generalize(tval, dtree, grammar, predicate, unverified, max_checks, node):
     checks = 0
     limit = 0
     abstract = True
@@ -413,6 +392,31 @@ def check(tval, dtree, grammar, predicate, unverified, max_checks):
                 checks += 1
             else:
                 continue
+    return abstract
+
+check_counter = 0
+def abstraction(tval, dtree, grammar, predicate, unverified, max_checks):
+    global check_counter, KEY
+    path, status = tval
+    node = get_child(dtree, path)
+    KEY = "%s:(%s) %s" % (node[0], tree_to_string(node), status)
+    if LOG:
+        print(check_counter, 'check:', node[0], status)
+        check_counter += 1
+    key, children, *rest = node
+    if not children: return []
+    if not is_nt(key): return []
+
+    if key == '<_SKIP>':
+        if SKIP_IS_CONCRETE: return []
+        if status == St.unchecked:
+            print('abstract: unverified', node[0])
+            return [(path, St.unverified)]
+        else:
+            print('abstract: verified', node[0])
+            return [(path, St.verified)]
+
+    abstract = can_generalize(tval, dtree, grammar, predicate, unverified, max_checks, node)
     if abstract:
         if status == St.unchecked:
             print('abstract: unverified', node[0])
@@ -423,7 +427,6 @@ def check(tval, dtree, grammar, predicate, unverified, max_checks):
     else:
         if status == St.unverified:
             print('NOT ABSTRACT:', KEY)
-            print(repr(rstr))
 
         if is_token(key): return []
         paths = []
@@ -434,7 +437,7 @@ def check(tval, dtree, grammar, predicate, unverified, max_checks):
             for i,child in enumerate(children):
                 if not is_nt(child[0]): continue
                 tval = (path + [i], St.unchecked)
-                p = check(tval, dtree, grammar, predicate, unverified, max_checks)
+                p = abstraction(tval, dtree, grammar, predicate, unverified, max_checks)
                 paths.extend(p)
         return paths
 
@@ -459,7 +462,7 @@ def mark_concrete(tree):
     return (name, [mark_concrete(c) for c in children], general)
 
 gen_counter = 0
-def abstraction(tree, grammar, predicate, max_checks):
+def isolation(tree, grammar, predicate, max_checks):
     global gen_counter
     unverified = [([], St.unchecked)]
     verified = []
@@ -467,9 +470,9 @@ def abstraction(tree, grammar, predicate, max_checks):
         v = unverified.pop(0)
         if LOG:
             node = get_child(tree, v[0])
-            print(gen_counter, 'abstraction:', node[0], v[1])
+            print(gen_counter, 'isolation:', node[0], v[1])
             gen_counter += 1
-        newpaths = check(v, tree, grammar, predicate, unverified, max_checks)
+        newpaths = abstraction(v, tree, grammar, predicate, unverified, max_checks)
         print('current paths:')
         for p in newpaths:
             node = get_child(tree, p[0])
@@ -500,7 +503,7 @@ def get_abstraction(grammar_, my_input, predicate, max_checks=100):
         print('reduction:', count_nodes(min_tree), count_leaves(min_tree), flush=True)
         print('min_tree:', repr(min_s), flush=True)
 
-    dd_tree_ =  abstraction(min_tree, grammar, predicate, max_checks)
+    dd_tree_ =  isolation(min_tree, grammar, predicate, max_checks)
     dd_tree = identify_similarities(grammar, predicate, dd_tree_, max_checks)
     s = general_str(dd_tree)
     return min_s, s, dd_tree
