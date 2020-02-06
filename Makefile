@@ -1,4 +1,4 @@
-clean: ; rm -rf log fuzz.log results fuzzing
+clean: ; rm -rf *.reduce.log *.fuzz.log results fuzzing
 clobber: clean; rm -rf .db
 results:; mkdir -p results
 
