@@ -1,6 +1,7 @@
 USE_NT_NAME = True
 TIMEOUT=5
 LOOK_DEEPER_IN_ISOLATED = True
+SKIP_IS_CONCRETE = True
 
 # The idea here is either try MAX_LIMIT number of tries
 # for a counter example, or give up after `MAX_CHECKS`
@@ -373,6 +374,7 @@ def check(tval, dtree, grammar, predicate, unverified, max_checks):
     if not is_nt(key): return []
 
     if key == '<_SKIP>':
+        if SKIP_IS_CONCRETE: return []
         if status == St.unchecked:
             print('abstract: unverified', node[0])
             return [(path, St.unverified)]
@@ -468,6 +470,12 @@ def abstraction(tree, grammar, predicate, max_checks):
             print(gen_counter, 'abstraction:', node[0], v[1])
             gen_counter += 1
         newpaths = check(v, tree, grammar, predicate, unverified, max_checks)
+        print('current paths:')
+        for p in newpaths:
+            node = get_child(tree, p[0])
+            print(">\t", p, "%s<%s>" % (node[0], repr(tree_to_string(node))))
+        print()
+
         for p in newpaths:
             if p[1] == St.verified:
                 verified.append(p)

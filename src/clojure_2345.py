@@ -9,8 +9,8 @@ def my_predicate(src):
         return PRes.success
     elif 'Syntax error compiling' in out:
         return PRes.invalid
-    elif 'Syntax error (ClassNotFoundException)' in out:
-        return PRes.invalid
+    #elif 'Syntax error (ClassNotFoundException)' in out:
+    #    return PRes.invalid
     elif 'Illegal field name' in out:
         return PRes.invalid
     elif 'Invalid number' in out:
