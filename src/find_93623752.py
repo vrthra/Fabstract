@@ -20,4 +20,4 @@ def my_predicate(src):
     return PRes.failed
 
 if __name__ == '__main__':
-    I.main('./lang/find/grammar/grammar.json', ' ./lang/find/bugs/find.93623752', my_predicate)
+    I.main('./lang/find/grammar/grammar.json', './lang/find/bugs/find.93623752', my_predicate)
