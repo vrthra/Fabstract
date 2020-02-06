@@ -128,6 +128,8 @@ class Fuzzer:
     def fuzz(self, key='<start>', max_num=None, max_depth=None):
         raise NotImplemented()
 
+COST = None
+
 class LimitFuzzer(Fuzzer):
     def symbol_cost(self, grammar, symbol, seen):
         if symbol in self.key_cost: return self.key_cost[symbol]
@@ -159,9 +161,14 @@ class LimitFuzzer(Fuzzer):
         return self.gen_key(key=key, depth=0, max_depth=max_depth)
 
     def __init__(self, grammar):
+        global COST
         super().__init__(grammar)
         self.key_cost = {}
-        self.cost = self.compute_cost(grammar)
+        if COST is not None:
+            self.cost = COST
+        else:
+            COST = self.compute_cost(grammar)
+            self.cost = COST
 
     def compute_cost(self, grammar):
         cost = {}
@@ -243,9 +250,11 @@ def compatible_nodes(tree, grammar):
     if [] in grammar[key]: node_lst.insert(0, (-1, (key, [])))
     return node_lst
 
-def e_g(general_a):
-    general = True if not general_a else general_a[0]
-    return general
+def e_g(abstract_a):
+    if not abstract_a:
+        return True
+    else:
+        return abstract_a[0]['abstract']
 
 # #### Replacing an array of nodes
 #
@@ -274,6 +283,7 @@ def identify_concrete_paths_to_nt(gtree, path=None):
     if general and is_nt(name): return []
     # we dont care about terminals either
     if not is_nt(name): return []
+    if name == '<_SKIP>': return []
 
     my_paths = [path]
     # for tokens we do not care about things below
@@ -343,7 +353,7 @@ def markup_paths(tkey, paths, gtree):
     for p in paths:
         cname, children, gen = get_child(gtree, p)
         assert name == cname
-        gtree = replace_path2(gtree, p, (newname, children, True)) # now it is generalizable!
+        gtree = replace_path2(gtree, p, (newname, children, {'sensitive': True, 'abstract': True})) # now it is generalizable!
     return gtree
 
 def identify_similarities(grammar, predicate, generalized_tree, max_checks=100):
@@ -368,12 +378,13 @@ def can_generalize(tval, dtree, grammar, predicate, unverified, max_checks, node
     limit = 0
     abstract = True
     rstr = None
-    while checks < max_checks:
+    checks = set()
+    while len(checks) < max_checks:
         limit += 1
         if limit >= MAX_LIMIT:
             # giveup.
             if FIND_COUNTER_EXAMPLE:
-                if checks > MIN_EXAMPLES:
+                if len(checks) > MIN_EXAMPLES:
                     abstract = True
                 else:
                     abstract = False
@@ -392,7 +403,7 @@ def can_generalize(tval, dtree, grammar, predicate, unverified, max_checks, node
             break
         else:
             if pres == PRes.success:
-                checks += 1
+                checks.add(rstr)
             else:
                 continue
     return abstract
@@ -447,8 +458,7 @@ def abstraction(tval, dtree, grammar, predicate, unverified, max_checks):
 
 def mark_verified_path(tree, path):
     name, children = get_child(tree, path)
-    abstract = True
-    new_tree = replace_path2(tree, path, (name, children, True))
+    new_tree = replace_path2(tree, path, (name, children, {'abstract': True}))
     return new_tree
 
 def mark_verified_abstract(tree, verified_paths):
@@ -457,12 +467,12 @@ def mark_verified_abstract(tree, verified_paths):
     new_tree = mark_verified_path(tree, path)
     return mark_verified_abstract(new_tree, rest)
 
-def mark_concrete(tree):
-    name, children, *general_a = tree
-    if not children:
-        return (name, [], True) # mark nonterminals as abstract
-    general = False if not general_a else general_a[0]
-    return (name, [mark_concrete(c) for c in children], general)
+def mark_concrete(tree): # TODO
+    name, children, *abstract_a = tree
+    #if not children:
+    #    return (name, [], True) # mark nonterminals as abstract
+    abstract = {'abstract': False} if not abstract_a else abstract_a[0]
+    return (name, [mark_concrete(c) for c in children], abstract)
 
 gen_counter = 0
 def isolation(tree, grammar, predicate, max_checks):
@@ -489,6 +499,7 @@ def isolation(tree, grammar, predicate, max_checks):
                 unverified.append(p)
             else:
                 assert false
+    print('abstract paths:', len(verified))
     new_tree = mark_verified_abstract(tree, [p[0] for p in verified])
     # now change everythign else to False
     return mark_concrete(new_tree)

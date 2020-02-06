@@ -26,7 +26,7 @@ def do(prefix, cmd, src):
     return o
 
 def _predicate(src):
-    if src in g_predicate: return g_predicate[src]
+    if src in g_predicate: return A.PRes(g_predicate[src])
     res = MY_PREDICATE(src)
     g_predicate[src] = res.value
     with open(LOG_NAME, 'a+') as f:
