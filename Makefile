@@ -2,8 +2,8 @@ clean: ; rm -rf *.reduce.log *.fuzz.log results fuzzing
 clobber: clean; rm -rf .db
 results:; mkdir -p results
 
-find_bugs=find_07b941b1 find_93623752 find_c8491c11 find_dbcb10e9 
-grep_bugs=grep_3c3bdace grep_54d55bba grep_8f08d8e2 grep_9c45c193
+find_bugs=07b941b1 93623752 c8491c11 dbcb10e9
+grep_bugs=3c3bdace 54d55bba 8f08d8e2 9c45c193
 
 closure_bugs=2808 2842 2937 3178 3379 1978
 clojure_bugs=2092 2345 2450 2473 2518 2521
