@@ -9,6 +9,8 @@ def my_predicate(src):
         return PRes.success
     elif 'Syntax error compiling' in out:
         return PRes.invalid
+    elif 'Illegal field name' in out:
+        return PRes.invalid
     elif 'TIMEOUT' in out:
         return PRes.invalid
     return PRes.failed
