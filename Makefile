@@ -19,7 +19,7 @@ results/reduce_%.log: src/%.py results
 	time python $< 2>&1 | unbuffer -p tee $@_
 	mv $@_ $@
 
-results/fuzz_%.log: src/%.py results/reduce_%.log
+results/fuzz_%.log: src/fuzz_%.py results/reduce_%.log
 	echo 1 $@; echo 2 $<; echo 3 $*; echo 4 $^
 	time python $< 2>&1 | unbuffer -p tee $@_
 	mv $@_ $@
