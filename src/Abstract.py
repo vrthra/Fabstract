@@ -393,7 +393,7 @@ def can_generalize(tval, dtree, grammar, predicate, unverified, max_checks, node
 
             print('warn: giving up', node[0], 'after', MAX_LIMIT,
                     'and no counterexample found.'
-                    'invalid values with', checks,
+                    'invalid values with', len(checks),
                     'valid values abstract:', abstract)
             break
         rstr = generate(dtree, grammar, [tval] + unverified)
