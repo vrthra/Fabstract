@@ -21,7 +21,7 @@ fuzz_lua:
 	time python src/fuzz_lua_5_3_5__4.py |  unbuffer -p tee fuzz.lua.log
 
 all_lua: reduce_lua fuzz_lua
-	tar lua.tar -cf fuzz.*.log reduce.*.log results fuzzing .db
+	tar -cf lua.tar fuzz.*.log reduce.*.log results fuzzing .db
 	@echo lua done
 
 all_rhino: reduce_rhino fuzz_rhino
