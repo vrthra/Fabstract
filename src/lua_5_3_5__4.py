@@ -11,7 +11,7 @@ def my_predicate(src):
     elif 'stack traceback' in out:
         return PRes.invalid
     elif 'TIMEOUT' in out:
-        return PRes.invalid
+        return PRes.timeout
     return PRes.failed
 
 import sys

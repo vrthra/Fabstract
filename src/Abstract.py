@@ -1,6 +1,8 @@
 USE_NT_NAME = True
 TIMEOUT=5
 LOOK_DEEPER_IN_ISOLATED = True
+
+SKIP_IS_SPECIAL = True
 SKIP_IS_CONCRETE = True
 
 # The idea here is either try MAX_LIMIT number of tries
@@ -23,6 +25,7 @@ class PRes(str, Enum):
     success = 'SUCCESS'
     failed = 'FAILED'
     invalid = 'INVALID'
+    timeout = 'TIMEOUT'
 
 class St(Enum):
     unchecked = 1
@@ -317,7 +320,7 @@ def are_these_similar(tkey, paths, grammar, gtree, predicate, max_checks=100):
             ctree = replace_path2(ctree, p, (name, [(v, [])]))
         res = tree_to_string(ctree)
         pr = predicate(res)
-        if pr == PRes.failed:
+        if pr == PRes.failed or pr == PRes.timeout:
             print(repr(v), repr(res))
             return False
         elif pr == PRes.success:
@@ -384,7 +387,7 @@ def can_generalize(tval, dtree, grammar, predicate, unverified, max_checks, node
             break
         rstr = generate(dtree, grammar, [tval] + unverified)
         pres = predicate(rstr)
-        if pres == PRes.failed:
+        if pres == PRes.failed or PRes.timeout:
             abstract = False
             break
         else:
@@ -407,7 +410,7 @@ def abstraction(tval, dtree, grammar, predicate, unverified, max_checks):
     if not children: return []
     if not is_nt(key): return []
 
-    if key == '<_SKIP>':
+    if key == '<_SKIP>' and SKIP_IS_SPECIAL:
         if SKIP_IS_CONCRETE: return []
         if status == St.unchecked:
             print('abstract: unverified', node[0])
