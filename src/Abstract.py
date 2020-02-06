@@ -320,12 +320,12 @@ def are_these_similar(tkey, paths, grammar, gtree, predicate, max_checks=100):
             ctree = replace_path2(ctree, p, (name, [(v, [])]))
         res = tree_to_string(ctree)
         pr = predicate(res)
-        if pr == PRes.failed or pr == PRes.timeout:
+        if pr == PRes.failed:
             print(repr(v), repr(res))
             return False
         elif pr == PRes.success:
             continue
-        elif pr == PRes.invalid:
+        elif pr == PRes.invalid  or pr == PRes.timeout:
             nchecks += 1
 
     if len(seen) <= 1: # a single
@@ -387,7 +387,7 @@ def can_generalize(tval, dtree, grammar, predicate, unverified, max_checks, node
             break
         rstr = generate(dtree, grammar, [tval] + unverified)
         pres = predicate(rstr)
-        if pres == PRes.failed or PRes.timeout:
+        if pres == PRes.failed:
             abstract = False
             break
         else:
