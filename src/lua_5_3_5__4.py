@@ -1,10 +1,5 @@
-import Abstract as A
 import Infra as I
 from Abstract import PRes
-import json
-import os
-import os.path
-import tempfile
 
 def my_predicate(src):
     o = I.do('lua', './lang/lua/compilers/lua --', src)
