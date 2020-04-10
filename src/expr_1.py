@@ -8,6 +8,8 @@ def my_predicate(src):
         val = eval(src)
     except SyntaxError:
         return PRes.invalid
+    except ZeroDivisionError:
+        return PRes.failed
     return PRes.failed
     #o = I.do('clojure', 'java -jar lang/clojure/compilers/clojure.jar', src)
     #if o.returncode == 0: return PRes.failed
