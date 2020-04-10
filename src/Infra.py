@@ -1,4 +1,4 @@
-import Abstract as A
+import Logic as A
 import os
 import json
 import tempfile
@@ -71,13 +71,11 @@ def main(gf_fbjson, bug_fn, pred, results_dir='results', max_checks=A.MAX_CHECKS
     assert _predicate(A.tree_to_string(tree)) == A.PRes.success
     # assert _predicate('find --help') == A.PRes.failed
 
-    min_s, abs_s, a_mintree = A.get_abstraction(meta,
+    logic = A.get_dd_logic(meta,
                                A.tree_to_string(tree),
                                _predicate,
                                max_checks)
-    print("min:", repr(min_s))
-    print("abs:", repr(abs_s))
     save(name)
 
     with open('./%s/%s.json' % (results_dir, A.NAME), 'w+') as f:
-        print(json.dumps({'min_s': min_s, 'abs_s': abs_s, 'abs_t': a_mintree}, indent=4), file=f)
+        print(json.dumps({'logic': logic}, indent=4), file=f)
