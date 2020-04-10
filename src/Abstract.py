@@ -34,7 +34,6 @@ class St(Enum):
 
 
 
-from fuzzingbook.Parser import canonical
 def non_canonical(g):
     return {k:[''.join(r) for r in g[k]] for k in g}
 
@@ -85,17 +84,6 @@ def general_str(tree):
         x = general_str(c)
         res.append(x)
     return ''.join(res)
-
-# ### `nt_group` groups the existing nodes in the tree in a dictionary
-
-def nt_group(tree, all_nodes=None):
-    if all_nodes is None: all_nodes = {}
-    name, children, *_ = tree
-    if not is_nt(name): return
-    all_nodes.setdefault(name, []).append(tree)
-    for c in children:
-        nt_group(c, all_nodes)
-    return all_nodes
 
 
 # ### Count tokens in a tree
@@ -238,6 +226,18 @@ def add_to_pq(tup, q):
 # ### Exploration of patterns
 
 # The exploration of patterns. We have a choice here on how we select compatible nodes. If we choose all compatible nodes of the original tree (`alt_nodes`) for a given node as replacement, even small derivation trees can produce too many alternatives. Here, we restrict ourselves to the children of the current node.
+
+# ### `nt_group` groups the existing nodes in the tree in a dictionary
+
+def nt_group(tree, all_nodes=None):
+    if all_nodes is None: all_nodes = {}
+    name, children, *_ = tree
+    if not is_nt(name): return
+    all_nodes.setdefault(name, []).append(tree)
+    for c in children:
+        nt_group(c, all_nodes)
+    return all_nodes
+
 
 def compatible_nodes(tree, grammar):
     key, children, *_ = tree
@@ -503,7 +503,6 @@ def isolation(tree, grammar, predicate, max_checks):
     new_tree = mark_verified_abstract(tree, [p[0] for p in verified])
     # now change everythign else to False
     return mark_concrete(new_tree)
-
 
 def get_abstraction(grammar_, my_input, predicate, max_checks=100):
     start = grammar_.get('[start]', '<start>')
