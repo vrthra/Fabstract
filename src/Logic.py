@@ -529,13 +529,15 @@ def shallow_abstraction(tval, dtree, grammar, predicate, max_checks):
         return paths
 
 import itertools
-def get_combo_paths(abstract_path_i, dtree, grammar, predicate, all_paths, max_checks):
+def get_combo_paths(abstract_path_i, dtree, grammar, predicate, all_paths, max_checks, combo_relations):
     combo_paths = []
     remaining_paths = [(j, path) for (j, path) in enumerate(all_paths) if abstract_path_i != j]
     for r in range(1, len(all_paths)):
         # skip i items from  
         combinations = itertools.combinations(remaining_paths, r)
         for rest_paths_ in combinations:
+            # if any subset in combo_relations is present in rest_paths
+            # then we do not need to check.
             # strip the numbers
             rest_paths = [p[1] for p in rest_paths_]
             if are_these_abstract(dtree, grammar, predicate, rest_paths, max_checks, ''):
@@ -555,19 +557,9 @@ def extract_logic(tree, grammar, predicate, max_checks):
         node = get_child(tree, path)
         ts = tree_to_string(node)
         unverified = abstract_paths[:i] + abstract_paths[i+1:]
-        #if are_these_abstract(tree, grammar, predicate, [tval], max_checks, node):
-        #    print("Can generalize", node[0] , ts)
-        #    true_abstracts.append((i, tval))
-        #    # we can safely ignore this node.
-        #else:
-        #    print("Can not generalize", node[0], ts)
-            # Now, find which of the unverified combinations, if enabled, will
-            # let us keep this node abstract.
-            # start with one node, then go for combinations of nodes until every
-            # thing except this.
-        combo_paths = get_combo_paths(i, tree, grammar, predicate, abstract_paths, max_checks)
+        combo_paths = get_combo_paths(i, tree, grammar, predicate, abstract_paths, max_checks, combo_relations)
         combo_relations.extend(combo_paths)
-    return combo_relations
+    return abstract_paths, combo_relations
 
 
 def get_dd_logic(grammar_, my_input, predicate, max_checks=100):
@@ -576,8 +568,8 @@ def get_dd_logic(grammar_, my_input, predicate, max_checks=100):
     assert start in grammar
     assert predicate(my_input) == PRes.success
     d_tree, *_ = Parser(non_canonical(grammar), start_symbol=start).parse(my_input)
-    logic =  extract_logic(d_tree, grammar, predicate, max_checks)
-    return logic
+    paths, logic =  extract_logic(d_tree, grammar, predicate, max_checks)
+    return paths, logic
 
 # # Experiments
 

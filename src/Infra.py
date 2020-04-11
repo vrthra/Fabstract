@@ -71,11 +71,11 @@ def main(gf_fbjson, bug_fn, pred, results_dir='results', max_checks=A.MAX_CHECKS
     assert _predicate(A.tree_to_string(tree)) == A.PRes.success
     # assert _predicate('find --help') == A.PRes.failed
 
-    logic = A.get_dd_logic(meta,
+    paths, logic = A.get_dd_logic(meta,
                                A.tree_to_string(tree),
                                _predicate,
                                max_checks)
     save(name)
 
     with open('./%s/%s.json' % (results_dir, A.NAME), 'w+') as f:
-        print(json.dumps({'logic': logic}, indent=4), file=f)
+        print(json.dumps( {'paths': paths, 'logic': logic}, indent=4), file=f)
