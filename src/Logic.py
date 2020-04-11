@@ -529,20 +529,34 @@ def shallow_abstraction(tval, dtree, grammar, predicate, max_checks):
         return paths
 
 import itertools
-def get_combo_paths(abstract_path_i, dtree, grammar, predicate, all_paths, max_checks, combo_relations):
-    combo_paths = []
+def get_combo_paths(abstract_path_i, dtree, grammar, predicate, all_paths, max_checks):
+    combo_paths = {}
     remaining_paths = [(j, path) for (j, path) in enumerate(all_paths) if abstract_path_i != j]
     for r in range(1, len(all_paths)):
         # skip i items from  
         combinations = itertools.combinations(remaining_paths, r)
         for rest_paths_ in combinations:
-            # if any subset in combo_relations is present in rest_paths
-            # then we do not need to check.
             # strip the numbers
             rest_paths = [p[1] for p in rest_paths_]
-            if are_these_abstract(dtree, grammar, predicate, rest_paths, max_checks, ''):
-                combo_paths.append(('OR', abstract_path_i, [p[0] for p in rest_paths_]))
+            rest_paths_idxs = [p[0] for p in rest_paths_]
+            key = sorted([':'.join([str(j)for j in x[0]]) for x in rest_paths]) # remove status
+            # if any subset in combo_paths is present in rest_paths
+            # then an OR is assured if they are turned on.
+            # So we do not need to check.
+            skey = set(key)
+            subsets =  [c for c in combo_paths if set(c) < skey]
+            if subsets:
+                continue
+            # here, we want to keep the rest_paths concrete, and all the
+            # remaining concrete.
+            concrete_paths = rest_paths_idxs
+            abstract_paths = [p for k,p in enumerate(all_paths) if k not in concrete_paths]
+            if are_these_abstract(dtree, grammar, predicate, abstract_paths, max_checks, ''):
+                combo_paths[tuple(key)] = ('OR', abstract_path_i, [p[0] for p in rest_paths_])
     return combo_paths
+
+def tts(path, tree):
+    return tree_to_string(get_child(tree, path))
 
 def extract_logic(tree, grammar, predicate, max_checks):
     # first extract the shallow abstraction.
@@ -551,15 +565,12 @@ def extract_logic(tree, grammar, predicate, max_checks):
     combo_relations = []
     abstract_paths = shallow_abstraction(([], None), tree, grammar, predicate, max_checks)
     for i,tval in enumerate(abstract_paths):
-        path, _status = tval
         # check if the path can be actually abstracted.
         # if not, then find the logical relation with the nodes in the same level.
-        node = get_child(tree, path)
-        ts = tree_to_string(node)
-        unverified = abstract_paths[:i] + abstract_paths[i+1:]
-        combo_paths = get_combo_paths(i, tree, grammar, predicate, abstract_paths, max_checks, combo_relations)
-        combo_relations.extend(combo_paths)
-    return abstract_paths, combo_relations
+        combo_paths = get_combo_paths(i, tree, grammar, predicate, abstract_paths, max_checks)
+        for item in combo_paths:
+            combo_relations.append(combo_paths[item])
+    return [p[0] for p in abstract_paths], combo_relations
 
 
 def get_dd_logic(grammar_, my_input, predicate, max_checks=100):
@@ -569,7 +580,7 @@ def get_dd_logic(grammar_, my_input, predicate, max_checks=100):
     assert predicate(my_input) == PRes.success
     d_tree, *_ = Parser(non_canonical(grammar), start_symbol=start).parse(my_input)
     paths, logic =  extract_logic(d_tree, grammar, predicate, max_checks)
-    return paths, logic
+    return [(i, tree_to_string(get_child(d_tree, p)), p) for i,p in enumerate(paths)], logic
 
 # # Experiments
 
