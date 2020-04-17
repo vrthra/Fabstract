@@ -565,7 +565,8 @@ def extract_logic(tree, grammar, predicate, max_checks):
     combo_relations = []
     abstract_paths = shallow_abstraction(([], None), tree, grammar, predicate, max_checks)
     for i,tval in enumerate(abstract_paths):
-        # check if the path can be actually abstracted.
+        # check if the path can be actually abstracted when every thing else is also abstracted.
+        ...
         # if not, then find the logical relation with the nodes in the same level.
         combo_paths = get_combo_paths(i, tree, grammar, predicate, abstract_paths, max_checks)
         for item in combo_paths:
