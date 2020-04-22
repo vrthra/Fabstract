@@ -37,8 +37,7 @@ class St(Enum):
 def non_canonical(g):
     return {k:[''.join(r) for r in g[k]] for k in g}
 
-from fuzzingbook.Parser import IterativeEarleyParser as Parser
-#from fuzzingbook.Parser import PEGParser as Parser
+from fuzzingbook.Parser import EarleyParser as Parser
 
 # ### Editable nodes
 #
